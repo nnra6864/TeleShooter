@@ -4,33 +4,59 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    private Rigidbody rigidbody;
+    private Rigidbody playerRigidbody;
     private Transform projectileSpawnPosition;
 
-    //Bullets
-    public List<GameObject> bullets = new List<GameObject>();
-    [HideInInspector] public GameObject chosenBullet;
-    public int bulletType; //Select and index from list
-    public bool shouldUseRandomBullets;
-    public bool chooseRandomBulletOnlyOnce;
+    //Projectiles
+    [Tooltip("List of prefabs you'd like to use as projectiles.")]
+    public List<GameObject> projectiles = new List<GameObject>();
+
+    [HideInInspector] public GameObject chosenProjectile;
+
+    [Tooltip("If you are not using random projectiles, projectile with this index will be selected from the list.")]
+    public int projectileType;
+
+    [Tooltip("Choose a random projectile from the list every time you shoot.")]
+    public bool shouldUseRandomProjectiles;
+
+    [Tooltip("Chooses random projectile only the first time a gun fires.")]
+    public bool chooseRandomProjectileOnlyOnce;
 
     //Burst
+    [Tooltip("Enable if you'd like your gun to shoot in bursts.")]
     public bool isBurst;
+
+    [Tooltip("Number of bullets per burst.")]
     public int burstLength;
-    public bool shouldChangeBulletEveryBurst;
-    public float cooldownBetweenBurstBullets;
+
+    [Tooltip("Time that passes between each bullet in a burst.")]
+    public float cooldownBetweenBurstProjectiles;
+
+    [Tooltip("Enable if you'd like every projectile in a single burst to be different.\nFor getting bursts of the same random bullet enable random projectiles and disable this.")]
+    public bool shouldChangeProjectileEveryBurst;
 
     //General
-    [HideInInspector] public GameObject bullet;
+    [HideInInspector] public GameObject projectile;
+
+    [Tooltip("Time that passes before you can shoot again.")]
     public float shootingCooldown;
+
+    [Tooltip("Determines if you can hold to shoot.")]
     public bool canHold;
+
+    [Tooltip("If disabled, player won't be able to shoot.")]
     public bool canShoot;
     [HideInInspector] public bool isShooting;
-    public float playerKnockbackStrength;
+
+    [Tooltip("Enable if you'd like a player to recieve knockback when shooting.")]
+    public bool shouldKnockBackPlayer;
+
+    [Tooltip("Multiplies the strength of knockback\n(knockback * multiplier).")]
+    public float playerKnockbackMultiplier;
 
     void Awake()
     {
-        rigidbody = GetComponentInParent<Rigidbody>();
+        playerRigidbody = GetComponentInParent<Rigidbody>();
         projectileSpawnPosition = transform.Find("Projectile Spawn Position").transform;
     }
 
@@ -57,24 +83,25 @@ public class Gun : MonoBehaviour
 
     public void ChooseRandomProjectile() 
     {
-        if (shouldUseRandomBullets)
+        if (shouldUseRandomProjectiles)
         {
-            chosenBullet = bullets[Random.Range(0, bullets.Count)];
-            if (chooseRandomBulletOnlyOnce)
+            chosenProjectile = projectiles[Random.Range(0, projectiles.Count)];
+            if (chooseRandomProjectileOnlyOnce)
             {
-                shouldUseRandomBullets = false;
+                shouldUseRandomProjectiles = false;
             }
         }
         else
         {
-            if (bulletType < 0) { bulletType = 0; }
-            chosenBullet = bullets[bulletType];
+            if (projectileType < 0) { projectileType = 0; }
+            chosenProjectile = projectiles[projectileType];
         }
     }
 
     public void InstantiateProjectile() 
     {
-        Debug.Log("0)");
+        projectile = Instantiate(chosenProjectile, projectileSpawnPosition.position, projectileSpawnPosition.rotation, null);
+        projectile.name = chosenProjectile.name.Replace("(Clone)", "");
     }
 
     public IEnumerator SpawnProjectile() 
@@ -85,21 +112,34 @@ public class Gun : MonoBehaviour
 
         if (isBurst)
         {
-            if (shouldChangeBulletEveryBurst)
+            for (int i = 0; i < burstLength; i++)
             {
-                ChooseRandomProjectile();
+                if (shouldChangeProjectileEveryBurst)
+                {
+                    ChooseRandomProjectile();
+                }
+
+                InstantiateProjectile();
+                KnochBackPlayer();
+
+                yield return new WaitForSeconds(cooldownBetweenBurstProjectiles);
             }
-
-            InstantiateProjectile();
-
-            yield return new WaitForSeconds(cooldownBetweenBurstBullets);
         }
         else
         {
             InstantiateProjectile();
+            KnochBackPlayer();
         }
 
         yield return new WaitForSeconds(shootingCooldown);
         isShooting = false;
+    }
+
+    public void KnochBackPlayer() 
+    {
+        if (shouldKnockBackPlayer && playerRigidbody != null)
+        {
+            playerRigidbody.AddForce(-transform.right * playerKnockbackMultiplier, ForceMode.Force);
+        }
     }
 }
