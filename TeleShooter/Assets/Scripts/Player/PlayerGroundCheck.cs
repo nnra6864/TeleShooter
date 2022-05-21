@@ -15,7 +15,6 @@ public class PlayerGroundCheck : MonoBehaviour
         numberOfJumps = playerStats.NumberOfJumps;
 
         playerMovement = GetComponentInParent<PlayerMovement>();
-        playerMovement.wallJumped += () => playerStats.JumpsLeft = 1;
     }
 
     private void OnTriggerEnter(Collider other)

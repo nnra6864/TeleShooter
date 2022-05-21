@@ -5,9 +5,16 @@ using UnityEngine;
 public class PlayerTakeDamage : MonoBehaviour
 {
     PlayerStats playerStats;
-    [HideInInspector] public float damageCooldown;
-    [HideInInspector] public float damage;
-    [HideInInspector] public bool shouldTakeDamage = false;
+    
+    [HideInInspector]
+    public float damageCooldown;
+    
+    [HideInInspector]
+    public float damage;
+    
+    [HideInInspector]
+    public bool shouldTakeDamage = false;
+    
     GameObject obstacle;
 
     void Awake()
@@ -21,6 +28,7 @@ public class PlayerTakeDamage : MonoBehaviour
         {
             ObstacleStats obstacleStats = collision.gameObject.GetComponentInParent<ObstacleStats>();
             shouldTakeDamage = true;
+            playerStats.IsTakingDamageFromLevel = false;
             damage = obstacleStats.Damage;
             damageCooldown = obstacleStats.Cooldown;
             obstacle = collision.gameObject;
@@ -46,6 +54,8 @@ public class PlayerTakeDamage : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!playerStats.CanTakeDamage) return;
+
         if (shouldTakeDamage && !playerStats.IsTakingDamageFromLevel)
         {
             StartCoroutine(TakeDamageFromLevel(damage, damageCooldown, obstacle));

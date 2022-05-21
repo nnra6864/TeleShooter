@@ -9,12 +9,10 @@ public class EnemyStuckCheck : MonoBehaviour
     Vector3 previousPosition;
     bool shouldCheck;
     bool isChecking;
-    int stuckTime;
 
     private void Awake()
     {
         enemyStats = GetComponentInParent<EnemyStats>();
-        stuckTime = enemyStats.StuckTime;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -53,7 +51,7 @@ public class EnemyStuckCheck : MonoBehaviour
     {
         isChecking = true;
         previousPosition = transform.position;
-        yield return new WaitForSeconds(stuckTime);
+        yield return new WaitForSeconds(enemyStats.StuckTime);
         if (Vector3.Distance(new Vector3(0, transform.position.y, 0), new Vector3(0, previousPosition.y, 0)) < 1)
         {
             enemyStats.CanMove = false;

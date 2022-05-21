@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class PlayerWallCheck : MonoBehaviour
 {
-    public PlayerStats playerStats;
-    public Rigidbody rb;
+    PlayerStats playerStats;
 
+    [Tooltip("If Disabled, Player won't be able to Wall Jump.")]
     public bool canWallJump;
-    public Vector3 originalPosition;
+    Vector3 originalPosition;
 
     private void Awake()
     {
         playerStats = GetComponentInParent<PlayerStats>();
-        rb = GetComponentInParent<Rigidbody>();
-
         originalPosition = transform.localPosition;
     }
 

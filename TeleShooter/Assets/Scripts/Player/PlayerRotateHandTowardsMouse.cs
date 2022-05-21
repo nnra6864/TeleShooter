@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerRotateHandTowardsMouse : MonoBehaviour
 {
-    [HideInInspector] public PlayerStats playerStats;
-    public float speed;
+    [HideInInspector]
+    public PlayerStats playerStats;
 
     private void Awake()
     {

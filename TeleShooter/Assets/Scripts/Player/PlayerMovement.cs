@@ -5,115 +5,39 @@ using Chronos;
 
 public class PlayerMovement : MonoBehaviour
 {
-    #region Events
-    public delegate void WallJumped();
-    public event WallJumped wallJumped;
-    #endregion
-
     #region Variables
     //Components
     PlayerStats playerStats;
-    Rigidbody rigidbody;
-    PlayerGroundCheck pgc;
-    PlayerWallCheck pwc;
+    Rigidbody playerRigidbody;
+    PlayerGroundCheck playerGroundCheck;
+    PlayerWallCheck playerWallCheck;
     Clock playerClock;
 
-    //Speed
-    float playerSpeed = 5;
-    float crouchSpeedMultiplier = 0.5f;
-    float movementSmoothTime = 0.1f;
-
-    float modifiedPlayerSpeed;
     float modifiedMovementSmoothTime;
-
-    //Jump
-    float jumpHeight = 10;
-    float crouchJumpMiltiplier = 0.75f;
-    float jumpSmoothTime = 0.05f;
-
-    float modifiedJumpHeight;
     float modifiedJumpSmoothTime;
-
-    bool shouldJump = false;
-
-    //Wall Jump
-    float wallJumpForce = 10;
-    float crouchWallJumpForceMultiplier = 0.5f;
-    float wallJumpHeight = 5;
-    float crouchWallJumpHeightMultiplier = 0.75f;
-    float wallJumpSmoothTime = 0f;
-
-    float modifiedWallJumpForce;
-    float modifiedWallJumpHeight;
     float modifiedWallJumpSmoothTime;
 
+    bool shouldJump = false;
     bool shouldWallJump = false;
 
     //Other
-    int movementDirection = 0; //If both A and D are pressed it determines which one was pressed last, -1 for A and 1 for D
-    int moveDir = 0; //If input is A and D it's 1, if input is A it's 2, if input is D it's 3 and if there is not input it's 0
-
+    int movementDirection = 0;
     Vector3 refVel = Vector3.zero;
     #endregion
 
-    private void AssignValuesToVariables() 
-    {
-        //Speed
-        playerSpeed = playerStats.Speed;
-        crouchSpeedMultiplier = playerStats.CrouchSpeedMultiplier;
-        movementSmoothTime = playerStats.MovementSmoothTime;
-
-        //Jump
-        jumpHeight = playerStats.JumpHeight;
-        crouchJumpMiltiplier = playerStats.CrouchJumpMultiplier;
-        jumpSmoothTime = playerStats.JumpSmoothTime;
-
-        //Wall Jump
-        wallJumpForce = playerStats.WallJumpForce;
-        crouchWallJumpForceMultiplier = playerStats.CrouchWallJumpForceMultiplier;
-        wallJumpHeight = playerStats.WallJumpHeight;
-        crouchWallJumpHeightMultiplier = playerStats.CrouchWallJumpHeightMultiplier;
-        wallJumpSmoothTime = playerStats.WallJumpSmoothTime;
-    }
-
     private void Awake()
     {
-        //Components
         playerStats = GetComponent<PlayerStats>();
-        rigidbody = gameObject.GetComponent<Rigidbody>();
-        pgc = GetComponentInChildren<PlayerGroundCheck>();
-        pwc = GetComponentInChildren<PlayerWallCheck>();
-    }
-
-    void Start()
-    {
-        AssignValuesToVariables();
+        playerRigidbody = gameObject.GetComponent<Rigidbody>();
+        playerGroundCheck = GetComponentInChildren<PlayerGroundCheck>();
+        playerWallCheck = GetComponentInChildren<PlayerWallCheck>();
     }
 
     void Update()
     {
         playerClock = Timekeeper.instance.Clock("Player");
 
-        //Modified Values
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            modifiedPlayerSpeed = (playerSpeed * crouchSpeedMultiplier) * playerClock.timeScale;
-            modifiedJumpHeight = (jumpHeight * crouchJumpMiltiplier) * playerClock.timeScale;
-            modifiedWallJumpForce = (wallJumpForce * crouchWallJumpForceMultiplier) * playerClock.timeScale;
-            modifiedWallJumpHeight = (wallJumpHeight * crouchWallJumpHeightMultiplier) * playerClock.timeScale;
-        }
-        else
-        {
-            modifiedPlayerSpeed = playerSpeed * playerClock.timeScale;
-            modifiedJumpHeight = jumpHeight * playerClock.timeScale;
-            modifiedWallJumpForce = wallJumpForce * playerClock.timeScale;
-            modifiedWallJumpHeight = wallJumpHeight * playerClock.timeScale;
-        }
-        modifiedMovementSmoothTime = movementSmoothTime * playerClock.timeScale;
-        modifiedJumpSmoothTime = jumpSmoothTime * playerClock.timeScale;
-        modifiedWallJumpSmoothTime = wallJumpSmoothTime * playerClock.timeScale;
-
-        // Getting Inputs
+        ModifyValues();
         HorizontalInput();
         VerticalInput();
     }
@@ -122,19 +46,85 @@ public class PlayerMovement : MonoBehaviour
     {
         HorizontalMovement();
 
-        if (rigidbody.velocity.y < 0)
+        if (playerRigidbody.velocity.y < 0)
         {
-            rigidbody.velocity = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y + (rigidbody.velocity.y / 15), rigidbody.velocity.z);
+            playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, playerRigidbody.velocity.y + (playerRigidbody.velocity.y / 15), playerRigidbody.velocity.z);
         }
 
-        if (shouldJump)
+        if (shouldJump && playerStats.CanJump)
         {
             Jump();
         }
-        if (shouldWallJump)
+        if (shouldWallJump && playerStats.CanWallJump)
         {
             WallJump(playerStats.IsMovingBackwards);
         }
+    }
+
+    private void CheckForCrouchAndSprint() 
+    {
+        //Checks if Player is Crouching and Sprinting
+        if (Input.GetKey(KeyCode.LeftControl) && playerStats.CanCrouch && Input.GetKey(KeyCode.LeftShift) && playerStats.CanSprint)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                playerStats.IsCrouching = true;
+                playerStats.IsSprinting = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                playerStats.IsSprinting = true;
+                playerStats.IsCrouching = false;
+            }
+        }
+        //Checks if Player is Crouching
+        else if (Input.GetKey(KeyCode.LeftControl) && playerStats.CanCrouch)
+        {
+            playerStats.IsCrouching = true;
+            playerStats.IsSprinting = false;
+        }
+        //Checks if Player is Sprinting
+        else if (Input.GetKey(KeyCode.LeftShift) && playerStats.CanSprint)
+        {
+            playerStats.IsSprinting = true;
+            playerStats.IsCrouching = false;
+        }
+        else
+        {
+            playerStats.IsCrouching = false;
+            playerStats.IsSprinting = false;
+        }
+    }
+
+    private void ModifyValues() 
+    {
+        CheckForCrouchAndSprint();
+
+        if (playerStats.IsCrouching)
+        {
+            playerStats.ModifiedSpeed = (playerStats.Speed * playerStats.CrouchSpeedMultiplier) * playerClock.timeScale;
+            playerStats.ModifiedJumpHeight = (playerStats.JumpHeight * playerStats.CrouchJumpMultiplier) * playerClock.timeScale;
+            playerStats.ModifiedWallJumpForce = (playerStats.WallJumpForce * playerStats.CrouchWallJumpForceMultiplier) * playerClock.timeScale;
+            playerStats.ModifiedWallJumpHeight = (playerStats.WallJumpHeight * playerStats.CrouchWallJumpHeightMultiplier) * playerClock.timeScale;
+        }
+        else if (playerStats.IsSprinting)
+        {
+            playerStats.ModifiedSpeed = (playerStats.Speed * playerStats.SprintSpeedMultiplier) * playerClock.timeScale;
+            playerStats.ModifiedJumpHeight = (playerStats.JumpHeight * playerStats.SprintJumpMultiplier) * playerClock.timeScale;
+            playerStats.ModifiedWallJumpForce = (playerStats.WallJumpForce * playerStats.SprintWallJumpForceMultiplier) * playerClock.timeScale;
+            playerStats.ModifiedWallJumpHeight = (playerStats.WallJumpHeight * playerStats.SprintWallJumpHeightMultiplier) * playerClock.timeScale;
+        }
+        else
+        {
+            playerStats.ModifiedSpeed = playerStats.Speed * playerClock.timeScale;
+            playerStats.ModifiedJumpHeight = playerStats.JumpHeight * playerClock.timeScale;
+            playerStats.ModifiedWallJumpForce = playerStats.WallJumpForce * playerClock.timeScale;
+            playerStats.ModifiedWallJumpHeight = playerStats.WallJumpHeight * playerClock.timeScale;
+        }
+        //Multiplies everything with Player Clock's Timescale;
+        modifiedMovementSmoothTime = playerStats.MovementSmoothTime * playerClock.timeScale;
+        modifiedJumpSmoothTime = playerStats.JumpSmoothTime * playerClock.timeScale;
+        modifiedWallJumpSmoothTime = playerStats.WallJumpSmoothTime * playerClock.timeScale;
     }
 
     private void HorizontalInput()
@@ -149,47 +139,31 @@ public class PlayerMovement : MonoBehaviour
             {
                 movementDirection = 1;
             }
-            moveDir = 1;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            moveDir = 2;
+            movementDirection = -1;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            moveDir = 3;
+            movementDirection = 1;
         }
-        else moveDir = 0;
+        else movementDirection = 0;
     }
 
-    private void HorizontalMovement() 
+    private void HorizontalMovement()
     {
-        if (moveDir == 0)
-        {
-            rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, new Vector3(0f, rigidbody.velocity.y, rigidbody.velocity.z), ref refVel, modifiedMovementSmoothTime);
-        }
-        if (moveDir == 1)
-        {
-            rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, new Vector3(modifiedPlayerSpeed * movementDirection, rigidbody.velocity.y, rigidbody.velocity.z), ref refVel, modifiedMovementSmoothTime);
-            if (movementDirection == 1) playerStats.IsMovingBackwards = false; else playerStats.IsMovingBackwards = true;
-        }
-        else if (moveDir == 2)
-        {
-            rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, new Vector3(-modifiedPlayerSpeed, rigidbody.velocity.y, rigidbody.velocity.z), ref refVel, modifiedMovementSmoothTime);
-            playerStats.IsMovingBackwards = true;
-        }
-        else if (moveDir == 3)
-        {
-            rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, new Vector3(modifiedPlayerSpeed, rigidbody.velocity.y, rigidbody.velocity.z), ref refVel, modifiedMovementSmoothTime);
-            playerStats.IsMovingBackwards = false;
-        }
+        if (!playerStats.CanMove) return;
+
+        playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(playerStats.ModifiedSpeed * movementDirection, playerRigidbody.velocity.y, playerRigidbody.velocity.z), ref refVel, modifiedMovementSmoothTime);
+        if (movementDirection == 1) playerStats.IsMovingBackwards = false; else if(movementDirection == -1) playerStats.IsMovingBackwards = true;
     }
 
     private void VerticalInput() 
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (pwc.canWallJump)
+            if (playerWallCheck.canWallJump)
             {
                 shouldWallJump = true;
             }
@@ -203,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump() 
     {
-        rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, new Vector3(rigidbody.velocity.x, modifiedJumpHeight, rigidbody.velocity.z), ref refVel, modifiedJumpSmoothTime);
+        playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(playerRigidbody.velocity.x, playerStats.ModifiedJumpHeight, playerRigidbody.velocity.z), ref refVel, modifiedJumpSmoothTime);
         playerStats.JumpsLeft--;
         shouldJump = false;
         playerStats.TotalJumps++;
@@ -213,14 +187,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isBackwards)
         {
-            rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, new Vector3(-modifiedWallJumpForce, modifiedWallJumpHeight, rigidbody.velocity.z), ref refVel, modifiedWallJumpSmoothTime);
+            playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(-playerStats.ModifiedWallJumpForce, playerStats.ModifiedWallJumpHeight, playerRigidbody.velocity.z), ref refVel, modifiedWallJumpSmoothTime);
         }
         else 
         {
-            rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, new Vector3(modifiedWallJumpForce, modifiedWallJumpHeight, rigidbody.velocity.z), ref refVel, modifiedWallJumpSmoothTime);
+            playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(playerStats.ModifiedWallJumpForce, playerStats.ModifiedWallJumpHeight, playerRigidbody.velocity.z), ref refVel, modifiedWallJumpSmoothTime);
         }
         shouldWallJump = false;
+        playerStats.JumpsLeft++;
         playerStats.TotalWallJumps++;
-        wallJumped.Invoke();
     }
 }

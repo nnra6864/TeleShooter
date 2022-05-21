@@ -254,21 +254,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectiles:
   - {fileID: 2106456018732197424, guid: 876104d2d2f399346aee8a1901fa6b44, type: 3}
-  chosenProjectile: {fileID: 0}
   projectileType: 0
-  shouldUseRandomProjectiles: 0
+  randomProjectiles: 0
   chooseRandomProjectileOnlyOnce: 0
-  isBurst: 1
+  chosenProjectile: {fileID: 0}
+  isBurst: 0
   burstLength: 5
   cooldownBetweenBurstProjectiles: 0.25
-  shouldChangeProjectileEveryBurst: 0
-  projectile: {fileID: 0}
-  shootingCooldown: 0.5
+  randomBurstProjectiles: 0
   canHold: 1
   canShoot: 1
-  isShooting: 0
+  shootingCooldown: 0.5
   shouldKnockBackPlayer: 1
   playerKnockbackMultiplier: 300
+  projectile: {fileID: 0}
+  isShooting: 0
 --- !u!1 &5074412814346742702
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 5074412814779789470}
   - component: {fileID: 5074412814779789465}
   m_Layer: 11
-  m_Name: WallCheckRight
+  m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,10 +383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c9cc631085bcb44ad0736e991f683a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 0}
-  rb: {fileID: 0}
   canWallJump: 0
-  originalPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &5074412815413543710
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,27 +515,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b88d7ed201089409ca4abba354aeda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanTakeDamage: 1
   Health: 100
   ResistanceMultiplier: 1
+  CanMove: 1
+  CanCrouch: 1
+  CanSprint: 1
   Speed: 5
   CrouchSpeedMultiplier: 0.5
+  SprintSpeedMultiplier: 1.25
   MovementSmoothTime: 0.1
+  CanJump: 1
   JumpHeight: 10
   CrouchJumpMultiplier: 0.75
+  SprintJumpMultiplier: 1.25
   JumpSmoothTime: 0.05
   NumberOfJumps: 2
+  CanWallJump: 1
   WallJumpForce: 10
   CrouchWallJumpForceMultiplier: 0.5
+  SprintWallJumpForceMultiplier: 1.25
   WallJumpHeight: 5
   CrouchWallJumpHeightMultiplier: 0.75
+  SprintWallJumpHeightMultiplier: 1.25
   WallJumpSmoothTime: 0
+  CanAttack: 1
+  CanShoot: 1
   Damage: 15
   DamageMultiplier: 1
   DieAnimationLength: 0
   CanTeleport: 1
   IsBackwards: 0
   IsMovingBackwards: 0
+  IsCrouching: 0
+  IsSprinting: 0
+  ModifiedSpeed: 0
   JumpsLeft: 0
+  ModifiedJumpHeight: 0
+  ModifiedWallJumpForce: 0
+  ModifiedWallJumpHeight: 0
   TotalKills: 0
   TotalDamageGiven: 0
   TotalDamageTaken: 0
@@ -626,4 +641,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 0}
-  speed: 0

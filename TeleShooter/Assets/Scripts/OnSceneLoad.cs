@@ -5,12 +5,13 @@ using Cinemachine;
 
 public class OnSceneLoad : MonoBehaviour
 {
-    [SerializeField] GameObject playerPrefab;
-    private GameObject player;
-    private int randomSpawnPointIndex;
-    private List<GameObject> spawnPoints = new List<GameObject>();
-
-    private GameObject mainVirtualCamera;
+    [SerializeField]
+    GameObject playerPrefab;
+    
+    public GameObject player;
+    int randomSpawnPointIndex;
+    List<GameObject> spawnPoints = new List<GameObject>();
+    GameObject mainVirtualCamera;
 
     void Start()
     {

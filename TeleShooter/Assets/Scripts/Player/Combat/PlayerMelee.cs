@@ -4,18 +4,29 @@ using UnityEngine;
 
 public class PlayerMelee : MonoBehaviour
 {
-    public float damage = 1;
-    public int targetLimit = -1;
-    public float enemyImmunityTime = 0;
-    public float cooldownLowerLimit = 0;
-    public float cooldownUpperLimit = 0;
-
-    bool isAttacking = false;
-
+    #region Variables
     PlayerStats playerStats;
     List<GameObject> enemies = new List<GameObject>();
     List<GameObject> deadEnemies = new List<GameObject>();
     EnemyTakeDamage enemyTakeDamage;
+
+    [Tooltip("Ammount of Damage the Weapon will do.")]
+    public float damage = 1;
+
+    [Tooltip("Maximum number of Targets.\nSet to -1 for Infinite.")]
+    public int targetLimit = -1;
+
+    [Tooltip("Time in Seconds the Enemy will be Immune to Damage after getting Hit.")]
+    public float enemyImmunityTime = 0;
+
+    [Tooltip("Lower Limmmit of a Cooldown in Seconds before being able to Attack again.\nSet both Lower and Upper Limit to the same value if you'd like it to be constant.")]
+    public float cooldownLowerLimit = 0;
+
+    [Tooltip("Upper Limmmit of a Cooldown in Seconds before being able to Attack again.\nSet both Lower and Upper Limit to the same value if you'd like it to be constant.")]
+    public float cooldownUpperLimit = 0;
+
+    bool isAttacking = false;
+    #endregion
 
     private void OnTriggerEnter(Collider other)
     {
@@ -93,6 +104,8 @@ public class PlayerMelee : MonoBehaviour
 
     public IEnumerator Attack() 
     {
+        if (!playerStats.CanAttack) yield break;
+
         isAttacking = true;
 
         EnemiesTakeDamage();
