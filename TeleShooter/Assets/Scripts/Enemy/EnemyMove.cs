@@ -18,6 +18,7 @@ public class EnemyMove : MonoBehaviour
     [HideInInspector] public List<GameObject> points = new List<GameObject>();
     #endregion
 
+    #region Functions
     private void Awake()
     {
         enemyStats = GetComponent<EnemyStats>();
@@ -46,6 +47,15 @@ public class EnemyMove : MonoBehaviour
             this.transform.localScale = new Vector3(-defaultScale.x, this.transform.localScale.y, this.transform.localScale.z);
         }
 
+        if (enemyStats.HasTeleported)
+        {
+            HasReachedPoint();
+            enemyStats.HasTeleported = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
         if (enemyStats.CanMove)
         {
             MoveEnemy();
@@ -54,14 +64,10 @@ public class EnemyMove : MonoBehaviour
         {
             rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, rigidBody.velocity.z);
         }
-
-        if (enemyStats.HasTeleported)
-        {
-            HasReachedPoint();
-            enemyStats.HasTeleported = false;
-        }
     }
+    #endregion
 
+    #region Custom Functions
     public void ChangeRoom(int room) 
     {
         enemyStats.CanMove = false;
@@ -75,7 +81,7 @@ public class EnemyMove : MonoBehaviour
     {
         points.Clear();
 
-        foreach (GameObject p in GameObject.FindGameObjectsWithTag("EnemyWalkPoint")) 
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("EnemyWalkPoint"))
         {
             if (p.transform.parent.transform.parent.name == "Room " + enemyStats.CurrentRoom.ToString())
             {
@@ -118,11 +124,12 @@ public class EnemyMove : MonoBehaviour
 
     public IEnumerator HasReachedPoint() 
     {
-        int cooldown = Random.Range(1, 5);
+        float cooldown = Random.Range(enemyStats.TimeBeforeChoosingPointLowerLimit, enemyStats.TimeBeforeChoosingPointUpperLimit);
         enemyStats.ShouldChoosePoint = true;
         enemyStats.CanMove = false;
         yield return new WaitForSeconds(cooldown);
         ChooseRandomPoint();
         choseNewPoint.Invoke();
     }
+    #endregion
 }

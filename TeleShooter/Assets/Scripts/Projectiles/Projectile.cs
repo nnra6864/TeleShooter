@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    Rigidbody rb;
+
+    void Awake()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        StartCoroutine(Dissapear());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        rb.velocity = transform.right * 25;
+    }
+
+    IEnumerator Dissapear() 
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 }

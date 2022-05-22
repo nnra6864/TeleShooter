@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
 {
+    #region Visible Variables
     [Header("Health")]
 
 
@@ -20,8 +19,8 @@ public class EnemyStats : MonoBehaviour
     [Header("Movement")]
 
 
-    [Tooltip("Enemy won't be able to Move if this is Disabled..")]
-    public bool CanMove = false;
+    [Tooltip("Enemy won't be able to Move if this is Disabled.")]
+    public bool CanMove;
 
     [Tooltip("Enemy's Speed.")]
     public float Speed;
@@ -32,8 +31,20 @@ public class EnemyStats : MonoBehaviour
     [Tooltip("Maximum Distance from Point that Enemy has to reach before stopping.")]
     public float RandomDistanceFromPointUpperLimit;
 
+    [Tooltip("Minimum Time that has to pass before Enemy can choose a new Point.\n(Time in Seconds)")]
+    public float TimeBeforeChoosingPointLowerLimit;
+
+    [Tooltip("Maximum Time that has to pass before Enemy can choose a new Point.\n(Time in Seconds)")]
+    public float TimeBeforeChoosingPointUpperLimit;
+
     [Tooltip("If Enemy's position stays the same for StuckTime ammount of Time he will change his Destination.\n(Time in Seconds)")]
     public float StuckTime;
+
+    [Tooltip("If Enemy Collides with an Obstacle his Speed will be Multiplied with ObstacleSpeedMutliplier.\n(Speed * ObstacleSpeedMultiplier)")]
+    public float ObstacleSpeedMultiplier;
+
+    [Tooltip("This variable determines for how long ObstacleSpeedMultiplier will last.\n(Time in Seconds)")]
+    public float ObstacleSpeedMultiplierTime;
 
 
     [Header("Jumping")]
@@ -76,28 +87,53 @@ public class EnemyStats : MonoBehaviour
    
     [Tooltip("If Disabled, Enemy won't be able to Teleport.")]
     public bool CanTeleport;
+    #endregion
 
     #region Hidden Variables
     //Health
     [HideInInspector] public bool IsTakingDamageFromLevel;
+    
     [HideInInspector] public bool IsTakingDamageFromPlayer;
 
     //Movement
-    [HideInInspector] public bool IsBackwards;
     [HideInInspector] public bool IsMoving = false;
+
+    [HideInInspector] public bool IsBackwards;
+    
+    [HideInInspector] public bool IsMovingBackwards;
+
+    [HideInInspector] public float ModifiedSpeed;
+
+    [HideInInspector] public float UnmodifiedSpeed;
 
     //Jump
     [HideInInspector] public bool IsGrounded;
-    [HideInInspector] public int JumpsLeft;
     
+    [HideInInspector] public int JumpsLeft;
+
+    [Tooltip("Determines if Enemy can Jump.")]
+    [HideInInspector]public bool ShouldJump;
+
     //Other
     [HideInInspector] public string LastPortalName = "";
 
     //Enemy Move
     [HideInInspector] public int CurrentRoom;
+    
     [HideInInspector] public bool HasTeleported = false;
+    
     [HideInInspector] public float RandomDistanceFromPoint = 1;
+    
     [HideInInspector] public bool ShouldChoosePoint = true;
+    
     [HideInInspector] public int PointIndex = 1;
+    #endregion
+
+    #region Functions
+    [ExecuteAlways]
+    private void Awake()
+    {
+        UnmodifiedSpeed = Speed;
+    }
     #endregion
 }

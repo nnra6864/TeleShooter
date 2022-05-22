@@ -9,6 +9,7 @@ public class EnemyTakeDamage : MonoBehaviour
     [HideInInspector] public float damage;
     [HideInInspector] public bool shouldTakeDamage = false;
 
+    #region Functions
     private void Awake()
     {
         enemyStats = GetComponent<EnemyStats>();
@@ -16,7 +17,7 @@ public class EnemyTakeDamage : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.CompareTag("Obstacle"))
         {
             ObstacleStats obstacleStats = collision.gameObject.GetComponentInParent<ObstacleStats>();
             shouldTakeDamage = true;
@@ -27,7 +28,7 @@ public class EnemyTakeDamage : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.CompareTag("Obstacle"))
         {
             shouldTakeDamage = true;
         }
@@ -35,7 +36,7 @@ public class EnemyTakeDamage : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.CompareTag("Obstacle"))
         {
             shouldTakeDamage = false;
             enemyStats.IsTakingDamageFromLevel = false;
@@ -44,16 +45,18 @@ public class EnemyTakeDamage : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (shouldTakeDamage && !enemyStats.IsTakingDamageFromLevel)
+        if (shouldTakeDamage && !enemyStats.IsTakingDamageFromLevel && enemyStats.CanTakeDamage)
         {
             StartCoroutine(TakeDamageFromLevel(damage, damageCooldown));
         }
-        else if (!shouldTakeDamage) 
+        else if (!shouldTakeDamage && enemyStats.CanTakeDamage) 
         {
             StopCoroutine(TakeDamageFromLevel(damage, damageCooldown));
         }
     }
+    #endregion
 
+    #region Custom Functions
     public IEnumerator TakeDamageFromLevel(float damageTaken, float cooldown)
     {
         enemyStats.IsTakingDamageFromLevel = true;
@@ -105,4 +108,5 @@ public class EnemyTakeDamage : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         Destroy(GetComponent<Rigidbody>());
     }
+    #endregion
 }

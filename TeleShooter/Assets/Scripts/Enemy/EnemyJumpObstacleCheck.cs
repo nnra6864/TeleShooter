@@ -4,34 +4,34 @@ using UnityEngine;
 
 public class EnemyJumpObstacleCheck : MonoBehaviour
 {
-    EnemyJump enemyJump;
+    EnemyStats enemyStats;
 
     private void Awake()
     {
-        enemyJump = transform.parent.GetComponentInChildren<EnemyJump>();
+        enemyStats = transform.parent.GetComponentInParent<EnemyStats>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Obstacle")
+        if (other.CompareTag("Obstacle"))
         {
-            enemyJump.shouldJump = false;
+            enemyStats.ShouldJump = false;
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Obstacle")
+        if (other.CompareTag("Obstacle"))
         {
-            enemyJump.shouldJump = false;
+            enemyStats.ShouldJump = false;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Obstacle")
+        if (other.CompareTag("Obstacle"))
         {
-            enemyJump.shouldJump = true;
+            enemyStats.ShouldJump = true;
         }
     }
 }

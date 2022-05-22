@@ -6,7 +6,6 @@ public class EnemyStuckCheck : MonoBehaviour
 {
     EnemyStats enemyStats;
 
-    Vector3 previousPosition;
     bool shouldCheck;
     bool isChecking;
 
@@ -14,9 +13,10 @@ public class EnemyStuckCheck : MonoBehaviour
     {
         enemyStats = GetComponentInParent<EnemyStats>();
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Level") 
+        if (other.CompareTag("Level"))
         {
             shouldCheck = true;
         }
@@ -24,7 +24,7 @@ public class EnemyStuckCheck : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Level")
+        if (other.CompareTag("Level"))
         {
             shouldCheck = true;
         }
@@ -32,7 +32,7 @@ public class EnemyStuckCheck : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Level")
+        if (other.CompareTag("Level"))
         {
             shouldCheck = false;
         }
@@ -50,9 +50,11 @@ public class EnemyStuckCheck : MonoBehaviour
     IEnumerator StuckTimer() 
     {
         isChecking = true;
-        previousPosition = transform.position;
+        Vector3 previousPosition = transform.position;
+
         yield return new WaitForSeconds(enemyStats.StuckTime);
-        if (Vector3.Distance(new Vector3(0, transform.position.y, 0), new Vector3(0, previousPosition.y, 0)) < 1)
+
+        if (Vector3.Distance(new Vector3(transform.position.x, transform.position.y, 0), new Vector3(previousPosition.x, previousPosition.y, 0)) < 1)
         {
             enemyStats.CanMove = false;
             enemyStats.ShouldChoosePoint = true;

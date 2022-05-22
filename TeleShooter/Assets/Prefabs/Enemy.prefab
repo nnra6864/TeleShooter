@@ -43,7 +43,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1.25, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6818802797730482049
 MonoBehaviour:
@@ -57,10 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1f583102607b046bb5033d5ef1e538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyRaycast: {fileID: 0}
-  shouldJump: 0
-  enemyIsBelowPoint: 0
-  check: Obstacle
+  checkType: 1
 --- !u!1 &4872955788260104366
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,10 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1f583102607b046bb5033d5ef1e538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyRaycast: {fileID: 0}
-  shouldJump: 0
-  enemyIsBelowPoint: 0
-  check: Level
+  checkType: 0
 --- !u!1 &7839710202621690068
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,25 +364,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fae568ac63c174dac5b5b6c1a9b1f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanTakeDamage: 1
   Health: 50
   ResistanceMultiplier: 1
-  CanMove: 0
+  CanMove: 1
   Speed: 1.5
+  RandomDistanceFromPointLowerLimit: 0.1
+  RandomDistanceFromPointUpperLimit: 2
+  TimeBeforeChoosingPointLowerLimit: 0
+  TimeBeforeChoosingPointUpperLimit: 5
+  StuckTime: 1
+  ObstacleSpeedMultiplier: 1.5
+  ObstacleSpeedMultiplierTime: 0.5
+  CanJump: 1
   JumpHeight: 6.5
   ObstacleJumpHeight: 5
   NumberOfJumps: 2
+  CanAttack: 1
+  CanShoot: 1
   Damage: 10
-  StuckTime: 1
+  DamageMultiplier: 0
   DieAnimationLength: 0
   CanTeleport: 1
-  RandomDistanceFromPointLowerLimit: 1
-  RandomDistanceFromPointUpperLimit: 1
   IsTakingDamageFromLevel: 0
   IsTakingDamageFromPlayer: 0
-  IsBackwards: 0
   IsMoving: 0
+  IsBackwards: 0
+  IsMovingBackwards: 0
+  ModifiedSpeed: 0
+  UnmodifiedSpeed: 0
   IsGrounded: 0
   JumpsLeft: 0
+  ShouldJump: 0
   LastPortalName: 
   CurrentRoom: 0
   HasTeleported: 0
