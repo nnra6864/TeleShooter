@@ -1,38 +1,32 @@
 using UnityEngine;
+using UnityEditor;
+using System;
 
+[Serializable]
 public class PlayerStats : MonoBehaviour
 {
-    #region Shown Variables
-    [Header("Health")]
-
-
-    [Tooltip("Determines if a Player can take Damage.")]
-    public bool CanTakeDamage;
-
-    [Tooltip("Player's Health.")]
-    public float Health;
-
-    [Tooltip("Multiplies all Damage Taken.\n(Damage * ResistanceMultiplier)")]
-    public float ResistanceMultiplier;
-
-
-    [Header("Movement")]
+    [Header("Editable Variables", order = 0)]
+    #region Editable Variables
+    [Header("Movement", order = 1)]
 
 
     [Tooltip("Determines if a Player can Move")]
     public bool CanMove;
+ 
+    [Tooltip("Speed of the Horizontal Movement.")]
+    public float Speed;
 
     [Tooltip("Determines if a Player can Crouch")]
     public bool CanCrouch;
 
+    [Tooltip("Multiplies the Speed when Crouch Key is held.\n(Speed * CrouchSpeedMultiplier)")]
+    public float CrouchSpeedMultiplier;
+
     [Tooltip("Determines if a Player can Sprint")]
     public bool CanSprint;
 
-    [Tooltip("Speed of the Horizontal Movement.")]
-    public float Speed;
-
-    [Tooltip("Multiplies the Speed when Crouch Key is held.\n(Speed * CrouchSpeedMultiplier)")]
-    public float CrouchSpeedMultiplier;
+    [Tooltip("If Disabled, Player won't be able to Teleport.")]
+    public bool CanTeleport;
 
     [Tooltip("Multiplies the Speed when Sprint Key is held.\n(Speed * SprintSpeedMultiplier)")]
     public float SprintSpeedMultiplier;
@@ -93,11 +87,21 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Combat")]
 
+
+    [Tooltip("Determines if a Player can take Damage.")]
+    public bool CanTakeDamage;
+
     [Tooltip("Determines if a Player can perform a Melee Attack.")]
     public bool CanAttack;
 
     [Tooltip("Determines if a Player can Shoot.")]
     public bool CanShoot;
+
+    [Tooltip("Player's Health.")]
+    public float Health;
+
+    [Tooltip("Multiplies all Damage Taken.\n(Damage * ResistanceMultiplier)")]
+    public float ResistanceMultiplier;
 
     [Tooltip("Ammount of Damage a Player will do when Attacking.\nThis doesn't affect Weapon's Damage.")]
     public float Damage;
@@ -105,71 +109,100 @@ public class PlayerStats : MonoBehaviour
     [Tooltip("Multiplies Damage.\n(Damage * DamageMultiplier)")]
     public float DamageMultiplier;
 
+    [Tooltip("Length of Player Death Animation in Seconds.")]
+    public int DieAnimationLength;
+    #endregion
+
+
+
+    [Header("Read Only Variables", order = 0)]
+    #region Read Only Variables
+    [Header("Movement", order = 1)]
+
+
+    [Tooltip("Determines if Player is Looking Backwards.")]
+    [ReadOnlyField] public bool IsBackwards;
+
+    [Tooltip("Determines if Player is Moving Backwards.")]
+    [ReadOnlyField] public bool IsMovingBackwards;
+
+    [Tooltip("Determines if Player is Crouching.")]
+    [ReadOnlyField] public bool IsCrouching;
+
+    [Tooltip("Determines if Player is Sprintint.")]
+    [ReadOnlyField] public bool IsSprinting;
+
+    [Tooltip("Speed with all Modifiers applied to it.")]
+    [ReadOnlyField] public float ModifiedSpeed;
+
+
+    [Header("Jumping")]
+
+
+    [Tooltip("Number of Jumps Left for Player to use.")]
+    [ReadOnlyField] public int JumpsLeft;
+
+    [Tooltip("Jump Height with all Modifiers applied to it.")]
+    [ReadOnlyField] public float ModifiedJumpHeight;
+
+
+    [Header("Wall Jumping")]
+
+
+    [Tooltip("Wall Jump Force with all Modifiers applied to it.")]
+    [ReadOnlyField] public float ModifiedWallJumpForce;
+
+    [Tooltip("Wall Jump Height with all Modifiers applied to it.")]
+    [ReadOnlyField] public float ModifiedWallJumpHeight;
+
+
+    [Header("Progress")]
+
+
+    [Tooltip("Amount of Kills in this session.")]
+    [ReadOnlyField] public int TotalKills;
+
+    [Tooltip("Amount of Damage Given in this session.")]
+    [ReadOnlyField] public float TotalDamageGiven;
+
+    [Tooltip("Amount of Damage Taken in this session.")]
+    [ReadOnlyField] public float TotalDamageTaken;
+
+    [Tooltip("Amount of Bullets Fired in this session.")]
+    [ReadOnlyField] public int TotalBulletsFired;
+
+    [Tooltip("Amount of Melee Attacks in this session.")]
+    [ReadOnlyField] public int TotalMeleeAttacks;
+
+    [Tooltip("Amount of Money earned in this session.")]
+    [ReadOnlyField] public int TotalMoney;
+
+    [Tooltip("Number of Jumps done in this session.")]
+    [ReadOnlyField] public int TotalJumps;
+
+    [Tooltip("Number of Wall Jumps done in this session.")]
+    [ReadOnlyField] public int TotalWallJumps;
+
+    [Tooltip("Number of Teleportations done in this session.")]
+    [ReadOnlyField] public int TotalTeleportations;
+
 
     [Header("General")]
 
 
-    [Tooltip("Length of Player Death Animation in Seconds.")]
-    public int DieAnimationLength;
+    [Tooltip("Name of the last Portal Player interacted with.")]
+    [ReadOnlyField] public string LastPortalName;
 
-    [Tooltip("If Disabled, Player won't be able to Teleport.")]
-    public bool CanTeleport;
-    #endregion
+    [Tooltip("Determines if Player is Taking Damage from Level.")]
+    [ReadOnlyField] public bool IsTakingDamageFromLevel;
 
-    #region Hidden Variables
-    //Movement
-    [HideInInspector] public bool IsBackwards;
+    [Tooltip("Determines if Player is Taking Damage from Enemy.")]
+    [ReadOnlyField] public bool IsTakingDamageFromEnemy;
 
-    [HideInInspector] public bool IsMovingBackwards;
+    [Tooltip("Name of the object that Caused Death of Player.")]
+    [ReadOnlyField] public string CauseOfDeath;
 
-    [HideInInspector] public bool IsCrouching;
-
-    [HideInInspector] public bool IsSprinting;
-
-    [HideInInspector] public float ModifiedSpeed;
-
-
-    //Jumping
-    [HideInInspector] public int JumpsLeft;
-
-    [HideInInspector] public float ModifiedJumpHeight;
-
-
-    //Wall Jumping
-    [HideInInspector] public float ModifiedWallJumpForce;
-
-    [HideInInspector] public float ModifiedWallJumpHeight;
-
-
-    //Progress
-    [HideInInspector] public int TotalKills;
-
-    [HideInInspector] public float TotalDamageGiven;
-
-    [HideInInspector] public float TotalDamageTaken;
-
-    [HideInInspector] public int TotalBulletsFired;
-
-    [HideInInspector] public int TotalMeleeAttacks;
-
-    [HideInInspector] public int TotalMoney;
-
-    [HideInInspector] public int TotalJumps;
-
-    [HideInInspector] public int TotalWallJumps;
-
-    [HideInInspector] public int TotalTeleportations;
-
-
-    //Other
-    [HideInInspector] public string LastPortalName;
-
-    [HideInInspector] public bool IsTakingDamageFromLevel;
-
-    [HideInInspector] public bool IsTakingDamageFromEnemy;
-
-    [HideInInspector] public string CauseOfDeath;
-
-    [HideInInspector] public int CurrentRoom;
+    [Tooltip("Index of the Room Player is located in.")]
+    [ReadOnlyField] public int CurrentRoom;
     #endregion
 }

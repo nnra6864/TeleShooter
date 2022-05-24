@@ -62,7 +62,7 @@ public class EnemyJump : MonoBehaviour
 
         yield return new WaitForSeconds(enemyStats.ObstacleSpeedMultiplierTime);
 
-        enemyStats.Speed = enemyStats.UnmodifiedSpeed;
+        enemyStats.Speed /= enemyStats.ObstacleSpeedMultiplier;
     }
 
     public void CollisionWithLevel(Collider other)

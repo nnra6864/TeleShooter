@@ -116,6 +116,11 @@ public class Gun : MonoBehaviour
     {
         projectile = Instantiate(chosenProjectile, projectileSpawnPosition.position, projectileSpawnPosition.rotation, null);
         projectile.name = chosenProjectile.name.Replace("(Clone)", "");
+
+        var projectileStats = projectile.GetComponent<Projectile>();
+        projectileStats.shotByPlayer = true;
+        projectileStats.damageMultiplier = playerStats.DamageMultiplier;
+
         playerStats.TotalBulletsFired++;
     }
 

@@ -88,6 +88,15 @@ public class EnemyTakeDamage : MonoBehaviour
         enemyStats.IsTakingDamageFromPlayer = false;
     }
 
+    public void TakeDamageFromProjectile(float damageTaken)
+    {
+        enemyStats.Health -= damageTaken * enemyStats.ResistanceMultiplier;
+        if (enemyStats.Health <= 0)
+        {
+            StartCoroutine(Die());
+        }
+    }
+
     public IEnumerator Die() 
     {
         yield return new WaitForEndOfFrame();
