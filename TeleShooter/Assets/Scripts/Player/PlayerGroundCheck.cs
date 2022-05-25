@@ -12,7 +12,7 @@ public class PlayerGroundCheck : MonoBehaviour
     private void Awake()
     {
         playerStats = GetComponentInParent<PlayerStats>();
-        numberOfJumps = playerStats.NumberOfJumps;
+        numberOfJumps = playerStats.numberOfJumps;
 
         playerMovement = GetComponentInParent<PlayerMovement>();
     }
@@ -21,7 +21,7 @@ public class PlayerGroundCheck : MonoBehaviour
     {
         if (other.name != "Player" && other.tag != "Portal" && other.tag != "EnemySpawnPoint")
         {
-            playerStats.JumpsLeft = numberOfJumps;
+            playerStats.jumpsLeft = numberOfJumps;
         }
     }
 }

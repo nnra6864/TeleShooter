@@ -18,7 +18,7 @@ public class PlayerWallCheck : MonoBehaviour
 
     private void Update()
     {
-        if (playerStats.IsMovingBackwards)
+        if (playerStats.isMovingBackwards)
         {
             transform.localPosition = new Vector3(-originalPosition.x, transform.localPosition.y, transform.localPosition.z);
         }

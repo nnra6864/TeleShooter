@@ -28,7 +28,7 @@ public class PlayerTakeDamage : MonoBehaviour
         {
             ObstacleStats obstacleStats = collision.gameObject.GetComponentInParent<ObstacleStats>();
             shouldTakeDamage = true;
-            playerStats.IsTakingDamageFromLevel = false;
+            playerStats.isTakingDamageFromLevel = false;
             damage = obstacleStats.Damage;
             damageCooldown = obstacleStats.Cooldown;
             obstacle = collision.gameObject;
@@ -48,15 +48,15 @@ public class PlayerTakeDamage : MonoBehaviour
         if (collision.gameObject.tag == "Obstacle")
         {
             shouldTakeDamage = false;
-            playerStats.IsTakingDamageFromLevel = false;
+            playerStats.isTakingDamageFromLevel = false;
         }
     }
 
     private void FixedUpdate()
     {
-        if (!playerStats.CanTakeDamage) return;
+        if (!playerStats.canTakeDamage) return;
 
-        if (shouldTakeDamage && !playerStats.IsTakingDamageFromLevel)
+        if (shouldTakeDamage && !playerStats.isTakingDamageFromLevel)
         {
             StartCoroutine(TakeDamageFromLevel(damage, damageCooldown, obstacle));
         }
@@ -68,42 +68,42 @@ public class PlayerTakeDamage : MonoBehaviour
 
     public IEnumerator TakeDamageFromLevel(float damageTaken, float cooldown, GameObject obstacle)
     {
-        playerStats.IsTakingDamageFromLevel = true;
+        playerStats.isTakingDamageFromLevel = true;
 
-        playerStats.Health -= damageTaken * playerStats.ResistanceMultiplier;
-        playerStats.TotalDamageTaken += damageTaken;
-        if (playerStats.Health <= 0)
+        playerStats.health -= damageTaken * playerStats.resistanceMultiplier;
+        playerStats.totalDamageTaken += damageTaken;
+        if (playerStats.health <= 0)
         {
-            playerStats.CauseOfDeath = obstacle.name;
+            playerStats.causeOfDeath = obstacle.name;
             StartCoroutine(Die());
         }
 
         yield return new WaitForSeconds(damageCooldown);
 
-        playerStats.IsTakingDamageFromLevel = false;
+        playerStats.isTakingDamageFromLevel = false;
     }
 
     public IEnumerator TakeDamageFromEnemy(float damageTaken, float cooldown, GameObject enemy)
     {
-        playerStats.IsTakingDamageFromEnemy = true;
+        playerStats.isTakingDamageFromEnemy = true;
 
-        playerStats.Health -= damageTaken * playerStats.ResistanceMultiplier;
-        playerStats.TotalDamageTaken += damageTaken;
-        if (playerStats.Health <= 0)
+        playerStats.health -= damageTaken * playerStats.resistanceMultiplier;
+        playerStats.totalDamageTaken += damageTaken;
+        if (playerStats.health <= 0)
         {
             StartCoroutine(Die());
         }
 
         yield return new WaitForSeconds(damageCooldown);
 
-        playerStats.IsTakingDamageFromEnemy = false;
+        playerStats.isTakingDamageFromEnemy = false;
     }
 
     public IEnumerator Die()
     {
         DisableAllPlayerComponents();
 
-        yield return new WaitForSeconds(playerStats.DieAnimationLength);
+        yield return new WaitForSeconds(playerStats.dieAnimationLength);
         //Destroy(gameObject);
     }
 

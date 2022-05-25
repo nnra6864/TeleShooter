@@ -21,7 +21,7 @@ public class EnemyRaycast : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rayDirection = enemyStats.IsBackwards ? -transform.right : transform.right;
+        rayDirection = enemyStats.isBackwards ? -transform.right : transform.right;
 
         RaycastHit hit;
         Ray ray = new Ray(transform.position, rayDirection);

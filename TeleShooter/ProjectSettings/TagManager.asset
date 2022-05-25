@@ -12,6 +12,7 @@ TagManager:
   - EnemyWalkPoint
   - EnemySpawnPoint
   - RoomCheck
+  - Projectile
   layers:
   - Default
   - TransparentFX

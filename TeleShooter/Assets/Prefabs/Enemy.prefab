@@ -364,44 +364,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fae568ac63c174dac5b5b6c1a9b1f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanTakeDamage: 1
-  Health: 50
-  ResistanceMultiplier: 1
-  CanMove: 1
-  Speed: 1.5
-  RandomDistanceFromPointLowerLimit: 0.1
-  RandomDistanceFromPointUpperLimit: 2
-  TimeBeforeChoosingPointLowerLimit: 0
-  TimeBeforeChoosingPointUpperLimit: 5
-  StuckTime: 1
-  ObstacleSpeedMultiplier: 1.5
-  ObstacleSpeedMultiplierTime: 0.5
-  CanJump: 1
-  JumpHeight: 6.5
-  ObstacleJumpHeight: 5
-  NumberOfJumps: 2
-  CanAttack: 1
-  CanShoot: 1
-  Damage: 10
-  DamageMultiplier: 0
-  DieAnimationLength: 0
-  CanTeleport: 1
-  IsTakingDamageFromLevel: 0
-  IsTakingDamageFromPlayer: 0
-  IsMoving: 0
-  IsBackwards: 0
-  IsMovingBackwards: 0
-  ModifiedSpeed: 0
-  UnmodifiedSpeed: 0
-  IsGrounded: 0
-  JumpsLeft: 0
-  ShouldJump: 0
-  LastPortalName: 
-  CurrentRoom: 0
-  HasTeleported: 0
-  RandomDistanceFromPoint: 1
-  ShouldChoosePoint: 1
-  PointIndex: 1
+  canMove: 1
+  speed: 1.5
+  obstacleSpeedMultiplier: 1.5
+  obstacleSpeedMultiplierTime: 0.5
+  randomDistanceFromPointLowerLimit: 0.1
+  randomDistanceFromPointUpperLimit: 2
+  timeBeforeChoosingPointLowerLimit: 0
+  timeBeforeChoosingPointUpperLimit: 5
+  stuckTime: 1
+  canJump: 1
+  jumpHeight: 6.5
+  obstacleJumpHeight: 5
+  numberOfJumps: 2
+  canAttack: 1
+  canShoot: 1
+  canTakeDamage: 1
+  health: 50
+  resistanceMultiplier: 1
+  damage: 10
+  damageMultiplier: 0
+  dieAnimationLength: 0
+  canTeleport: 1
+  isMoving: 0
+  isBackwards: 0
+  isMovingBackwards: 0
+  modifiedSpeed: 0
+  lastPortalName: 
+  isGrounded: 0
+  jumpsLeft: 0
+  shouldJump: 0
+  isTakingDamageFromLevel: 0
+  isTakingDamageFromPlayer: 0
+  currentRoom: 0
+  hasTeleported: 0
+  randomDistanceFromPoint: 1
+  shouldChoosePoint: 1
+  pointIndex: 1
 --- !u!114 &390610414885390931
 MonoBehaviour:
   m_ObjectHideFlags: 0

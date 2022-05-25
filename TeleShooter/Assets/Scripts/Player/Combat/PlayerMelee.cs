@@ -86,8 +86,8 @@ public class PlayerMelee : MonoBehaviour
                 if (enemy != null)
                 {
                     enemyTakeDamage = enemy.GetComponent<EnemyTakeDamage>(); enemyTakeDamage.StartCoroutine(enemyTakeDamage.TakeDamageFromPlayer(damage, enemyImmunityTime, this.transform.root.gameObject));
-                    playerStats.TotalDamageGiven += damage;
-                    playerStats.TotalMeleeAttacks++;
+                    playerStats.totalDamageGiven += damage;
+                    playerStats.totalMeleeAttacks++;
                     hits++;
                 }
                 else
@@ -104,7 +104,7 @@ public class PlayerMelee : MonoBehaviour
 
     public IEnumerator Attack() 
     {
-        if (!playerStats.CanAttack) yield break;
+        if (!playerStats.canAttack) yield break;
 
         isAttacking = true;
 

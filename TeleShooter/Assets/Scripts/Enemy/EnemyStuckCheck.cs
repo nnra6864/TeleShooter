@@ -52,12 +52,12 @@ public class EnemyStuckCheck : MonoBehaviour
         isChecking = true;
         Vector3 previousPosition = transform.position;
 
-        yield return new WaitForSeconds(enemyStats.StuckTime);
+        yield return new WaitForSeconds(enemyStats.stuckTime);
 
         if (Vector3.Distance(new Vector3(transform.position.x, transform.position.y, 0), new Vector3(previousPosition.x, previousPosition.y, 0)) < 1)
         {
-            enemyStats.CanMove = false;
-            enemyStats.ShouldChoosePoint = true;
+            enemyStats.canMove = false;
+            enemyStats.shouldChoosePoint = true;
             GetComponentInParent<EnemyMove>().ChooseRandomPoint();
         }
         shouldCheck = true;

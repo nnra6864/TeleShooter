@@ -15,8 +15,8 @@ public class EnemyGroundCheck : MonoBehaviour
     {
         if (other.tag != "Player" && other.tag != "Enemy") 
         {
-            enemyStats.IsGrounded = true;
-            enemyStats.JumpsLeft = enemyStats.NumberOfJumps;
+            enemyStats.isGrounded = true;
+            enemyStats.jumpsLeft = enemyStats.numberOfJumps;
         }
     }
 
@@ -24,7 +24,7 @@ public class EnemyGroundCheck : MonoBehaviour
     {
         if (other.tag != "Player" && other.tag != "Enemy")
         {
-            enemyStats.IsGrounded = true;
+            enemyStats.isGrounded = true;
         }
     }
 
@@ -32,7 +32,7 @@ public class EnemyGroundCheck : MonoBehaviour
     {
         if (other.tag != "Player" && other.tag != "Enemy")
         {
-            enemyStats.IsGrounded = false;
+            enemyStats.isGrounded = false;
         }
     }
 }

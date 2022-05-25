@@ -76,7 +76,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (canShoot && playerStats.CanShoot && !isShooting)
+        if (canShoot && playerStats.canShoot && !isShooting)
         {
             if (canHold)
             {
@@ -117,11 +117,11 @@ public class Gun : MonoBehaviour
         projectile = Instantiate(chosenProjectile, projectileSpawnPosition.position, projectileSpawnPosition.rotation, null);
         projectile.name = chosenProjectile.name.Replace("(Clone)", "");
 
-        var projectileStats = projectile.GetComponent<Projectile>();
+        var projectileStats = projectile.GetComponent<ProjectileStats>();
         projectileStats.shotByPlayer = true;
-        projectileStats.damageMultiplier = playerStats.DamageMultiplier;
+        projectileStats.damageMultiplier = playerStats.damageMultiplier;
 
-        playerStats.TotalBulletsFired++;
+        playerStats.totalBulletsFired++;
     }
 
     public IEnumerator SpawnProjectile() 

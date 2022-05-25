@@ -15,7 +15,7 @@ public class EnemyJumpObstacleCheck : MonoBehaviour
     {
         if (other.CompareTag("Obstacle"))
         {
-            enemyStats.ShouldJump = false;
+            enemyStats.shouldJump = false;
         }
     }
 
@@ -23,7 +23,7 @@ public class EnemyJumpObstacleCheck : MonoBehaviour
     {
         if (other.CompareTag("Obstacle"))
         {
-            enemyStats.ShouldJump = false;
+            enemyStats.shouldJump = false;
         }
     }
 
@@ -31,7 +31,7 @@ public class EnemyJumpObstacleCheck : MonoBehaviour
     {
         if (other.CompareTag("Obstacle"))
         {
-            enemyStats.ShouldJump = true;
+            enemyStats.shouldJump = true;
         }
     }
 }

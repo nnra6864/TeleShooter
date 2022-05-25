@@ -8,82 +8,82 @@ public class EnemyStats : MonoBehaviour
 
 
     [Tooltip("Enemy won't be able to Move if this is Disabled.")]
-    public bool CanMove;
+    public bool canMove;
 
     [Tooltip("Enemy's Speed.")]
-    public float Speed;
+    public float speed;
 
     [Tooltip("If Enemy Collides with an Obstacle his Speed will be Multiplied with ObstacleSpeedMutliplier.\n(Speed * ObstacleSpeedMultiplier)")]
-    public float ObstacleSpeedMultiplier;
+    public float obstacleSpeedMultiplier;
 
     [Tooltip("This variable determines for how long ObstacleSpeedMultiplier will last.\n(Time in Seconds)")]
-    public float ObstacleSpeedMultiplierTime;
+    public float obstacleSpeedMultiplierTime;
 
     [Tooltip("Minimum Distance from Point that Enemy has to reach before stopping.")]
-    public float RandomDistanceFromPointLowerLimit;
+    public float randomDistanceFromPointLowerLimit;
 
     [Tooltip("Maximum Distance from Point that Enemy has to reach before stopping.")]
-    public float RandomDistanceFromPointUpperLimit;
+    public float randomDistanceFromPointUpperLimit;
 
     [Tooltip("Minimum Time that has to pass before Enemy can choose a new Point.\n(Time in Seconds)")]
-    public float TimeBeforeChoosingPointLowerLimit;
+    public float timeBeforeChoosingPointLowerLimit;
 
     [Tooltip("Maximum Time that has to pass before Enemy can choose a new Point.\n(Time in Seconds)")]
-    public float TimeBeforeChoosingPointUpperLimit;
+    public float timeBeforeChoosingPointUpperLimit;
 
     [Tooltip("If Enemy's position stays the same for StuckTime ammount of Time he will change his Destination.\n(Time in Seconds)")]
-    public float StuckTime;
+    public float stuckTime;
 
 
     [Header("Jumping")]
 
 
     [Tooltip("Determines if Enemy can Jump.")]
-    public bool CanJump;
+    public bool canJump;
 
     [Tooltip("Height of a Jump.")]
-    public float JumpHeight;
+    public float jumpHeight;
 
     [Tooltip("Height of a Jump over Obstacle.")]
-    public float ObstacleJumpHeight;
+    public float obstacleJumpHeight;
 
     [Tooltip("Number of Jumps an Enemy can do before having to land on something so he can Jump again.")]
-    public int NumberOfJumps;
+    public int numberOfJumps;
 
 
     [Header("Combat")]
 
 
     [Tooltip("Determines if an Enemy can perform a Melee Attack.")]
-    public bool CanAttack;
+    public bool canAttack;
 
     [Tooltip("Determines if an Enemy can Shoot.")]
-    public bool CanShoot;
+    public bool canShoot;
 
     [Tooltip("Determines if a Player can take Damage.")]
-    public bool CanTakeDamage;
+    public bool canTakeDamage;
 
     [Tooltip("Enemy's Health.")]
-    public float Health;
+    public float health;
 
     [Tooltip("Multiplies all Damage Taken.\n(Damage * ResistanceMultiplier)")]
-    public float ResistanceMultiplier;
+    public float resistanceMultiplier;
 
     [Tooltip("Ammount of Damage an Enemy will do when Attacking.\nThis doesn't affect Weapon's Damage.")]
-    public float Damage;
+    public float damage;
 
     [Tooltip("Multiplies Damage.\n(Damage * DamageMultiplier)")]
-    public float DamageMultiplier;
+    public float damageMultiplier;
 
 
     [Header("General")]
 
 
     [Tooltip("Length of Player Death Animation in Seconds.")]
-    public int DieAnimationLength;
+    public int dieAnimationLength;
    
     [Tooltip("If Disabled, Enemy won't be able to Teleport.")]
-    public bool CanTeleport;
+    public bool canTeleport;
     #endregion
 
 
@@ -94,60 +94,60 @@ public class EnemyStats : MonoBehaviour
 
 
     [Tooltip("Determines if Enemy is Moving.")]
-    [ReadOnlyField] public bool IsMoving = false;
+    [ReadOnlyField] public bool isMoving = false;
 
     [Tooltip("Determines if Enemy is Looking Backwards.")]
-    [ReadOnlyField] public bool IsBackwards;
+    [ReadOnlyField] public bool isBackwards;
 
     [Tooltip("Determines if Enemy is Moving Backwards.")]
-    [ReadOnlyField] public bool IsMovingBackwards;
+    [ReadOnlyField] public bool isMovingBackwards;
 
     [Tooltip("Speed with all Modifiers applied to it.")]
-    [ReadOnlyField] public float ModifiedSpeed;
+    [ReadOnlyField] public float modifiedSpeed;
 
     [Tooltip("Name of the Last Portal an Enemy interacted with.")]
-    [ReadOnlyField] public string LastPortalName = "";
+    [ReadOnlyField] public string lastPortalName = "";
 
     
     [Header("Jump")]
 
 
     [Tooltip("Determines if an Enemy is Grounded.")]
-    [ReadOnlyField] public bool IsGrounded;
+    [ReadOnlyField] public bool isGrounded;
 
     [Tooltip("Number of Jumps left for Enemy to use.")]
-    [ReadOnlyField] public int JumpsLeft;
+    [ReadOnlyField] public int jumpsLeft;
 
     [Tooltip("Determines if Enemy should Jump.")]
-    [ReadOnlyField] public bool ShouldJump;
+    [ReadOnlyField] public bool shouldJump;
 
 
     [Header("Combat")]
 
 
     [Tooltip("Determines if Enemy is taking Damage from Level.")]
-    [ReadOnlyField] public bool IsTakingDamageFromLevel;
+    [ReadOnlyField] public bool isTakingDamageFromLevel;
 
     [Tooltip("Determines if Enemy is taking Damage from Player.")]
-    [ReadOnlyField] public bool IsTakingDamageFromPlayer;
+    [ReadOnlyField] public bool isTakingDamageFromPlayer;
 
 
     [Header("Enemy Move")]
 
 
     [Tooltip("Index of the Room Enemy is located in.")]
-    [ReadOnlyField] public int CurrentRoom;
+    [ReadOnlyField] public int currentRoom;
 
     [Tooltip("Determines if an Enemy has Teleported.")]
-    [ReadOnlyField] public bool HasTeleported = false;
+    [ReadOnlyField] public bool hasTeleported = false;
 
     [Tooltip("Random Distance from Enemy Walk Point that Enemy needs to reach.")]
-    [ReadOnlyField] public float RandomDistanceFromPoint = 1;
+    [ReadOnlyField] public float randomDistanceFromPoint = 1;
 
     [Tooltip("Determines if an Enemy should Choose new Walk Point.")]
-    [ReadOnlyField] public bool ShouldChoosePoint = true;
+    [ReadOnlyField] public bool shouldChoosePoint = true;
 
     [Tooltip("Index of a Point Enemy chose.")]
-    [ReadOnlyField] public int PointIndex = 1;
+    [ReadOnlyField] public int pointIndex = 1;
     #endregion
 }

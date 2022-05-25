@@ -29,7 +29,7 @@ public class EnemyMove : MonoBehaviour
 
     void Start()
     {
-        if (enemyStats.CurrentRoom < 1) { enemyStats.CurrentRoom = 1; }
+        if (enemyStats.currentRoom < 1) { enemyStats.currentRoom = 1; }
         AddPoints();
         ChooseRandomPoint();
     }
@@ -38,25 +38,25 @@ public class EnemyMove : MonoBehaviour
     {
         if (rigidBody.velocity.x >= 0)
         {
-            enemyStats.IsBackwards = false;
+            enemyStats.isBackwards = false;
             this.transform.localScale = new Vector3(defaultScale.x, this.transform.localScale.y, this.transform.localScale.z);
         }
         else
         {
-            enemyStats.IsBackwards = true;
+            enemyStats.isBackwards = true;
             this.transform.localScale = new Vector3(-defaultScale.x, this.transform.localScale.y, this.transform.localScale.z);
         }
 
-        if (enemyStats.HasTeleported)
+        if (enemyStats.hasTeleported)
         {
             HasReachedPoint();
-            enemyStats.HasTeleported = false;
+            enemyStats.hasTeleported = false;
         }
     }
 
     private void FixedUpdate()
     {
-        if (enemyStats.CanMove)
+        if (enemyStats.canMove)
         {
             MoveEnemy();
         }
@@ -70,9 +70,9 @@ public class EnemyMove : MonoBehaviour
     #region Custom Functions
     public void ChangeRoom(int room) 
     {
-        enemyStats.CanMove = false;
-        enemyStats.ShouldChoosePoint = true;
-        enemyStats.CurrentRoom = room;
+        enemyStats.canMove = false;
+        enemyStats.shouldChoosePoint = true;
+        enemyStats.currentRoom = room;
         AddPoints();
         ChooseRandomPoint();
     }
@@ -83,7 +83,7 @@ public class EnemyMove : MonoBehaviour
 
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("EnemyWalkPoint"))
         {
-            if (p.transform.parent.transform.parent.name == "Room " + enemyStats.CurrentRoom.ToString())
+            if (p.transform.parent.transform.parent.name == "Room " + enemyStats.currentRoom.ToString())
             {
                 points.Add(p);
             }
@@ -92,30 +92,30 @@ public class EnemyMove : MonoBehaviour
 
     public void ChooseRandomPoint() 
     {
-        if (enemyStats.ShouldChoosePoint)
+        if (enemyStats.shouldChoosePoint)
         {
-            enemyStats.PointIndex = Random.Range(0, points.Count);
-            enemyStats.RandomDistanceFromPoint = Random.Range(enemyStats.RandomDistanceFromPointLowerLimit, enemyStats.RandomDistanceFromPointUpperLimit);
+            enemyStats.pointIndex = Random.Range(0, points.Count);
+            enemyStats.randomDistanceFromPoint = Random.Range(enemyStats.randomDistanceFromPointLowerLimit, enemyStats.randomDistanceFromPointUpperLimit);
         }
 
-        enemyStats.ShouldChoosePoint = false;
-        enemyStats.CanMove = true;
+        enemyStats.shouldChoosePoint = false;
+        enemyStats.canMove = true;
     }
 
     public void MoveEnemy()
     {
         if (points.Count > 0)
         {
-            if (points[enemyStats.PointIndex].transform.position.x > transform.position.x)
+            if (points[enemyStats.pointIndex].transform.position.x > transform.position.x)
             {
-                rigidBody.velocity = new Vector3(enemyStats.Speed, rigidBody.velocity.y, rigidBody.velocity.z);
+                rigidBody.velocity = new Vector3(enemyStats.speed, rigidBody.velocity.y, rigidBody.velocity.z);
             }
-            else if (points[enemyStats.PointIndex].transform.position.x < transform.position.x)
+            else if (points[enemyStats.pointIndex].transform.position.x < transform.position.x)
             {
-                rigidBody.velocity = new Vector3(-enemyStats.Speed, rigidBody.velocity.y, rigidBody.velocity.z);
+                rigidBody.velocity = new Vector3(-enemyStats.speed, rigidBody.velocity.y, rigidBody.velocity.z);
             }
 
-            if (Vector3.Distance(new Vector3(transform.position.x, 0, 0), new Vector3(points[enemyStats.PointIndex].transform.position.x, 0, 0)) < enemyStats.RandomDistanceFromPoint)
+            if (Vector3.Distance(new Vector3(transform.position.x, 0, 0), new Vector3(points[enemyStats.pointIndex].transform.position.x, 0, 0)) < enemyStats.randomDistanceFromPoint)
             {
                 StartCoroutine(HasReachedPoint());
             }
@@ -124,9 +124,9 @@ public class EnemyMove : MonoBehaviour
 
     public IEnumerator HasReachedPoint() 
     {
-        float cooldown = Random.Range(enemyStats.TimeBeforeChoosingPointLowerLimit, enemyStats.TimeBeforeChoosingPointUpperLimit);
-        enemyStats.ShouldChoosePoint = true;
-        enemyStats.CanMove = false;
+        float cooldown = Random.Range(enemyStats.timeBeforeChoosingPointLowerLimit, enemyStats.timeBeforeChoosingPointUpperLimit);
+        enemyStats.shouldChoosePoint = true;
+        enemyStats.canMove = false;
         yield return new WaitForSeconds(cooldown);
         ChooseRandomPoint();
         choseNewPoint.Invoke();

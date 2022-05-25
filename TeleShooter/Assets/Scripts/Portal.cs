@@ -20,36 +20,46 @@ public class Portal : MonoBehaviour
         {
             p2 = this.transform.parent.GetChild(0).gameObject;
         }
-
         teleportDestination = p2.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            canTeleport = other.GetComponent<PlayerStats>().CanTeleport;
+            PlayerStats playerStats = other.GetComponent<PlayerStats>();
 
-            if (canTeleport && other.GetComponent<PlayerStats>().LastPortalName == "")
+            canTeleport = playerStats.canTeleport;
+            if (canTeleport && playerStats.lastPortalName == "")
             {
-                PlayerStats playerStats = other.GetComponent<PlayerStats>();
-
-                playerStats.LastPortalName = this.name;
-                playerStats.TotalTeleportations++;
+                playerStats.lastPortalName = this.name;
+                playerStats.totalTeleportations++;
                 other.transform.position = teleportDestination;
             }
         }
 
-        if (other.tag == "Enemy")
+        if (other.CompareTag("Enemy"))
         {
-            canTeleport = other.GetComponent<EnemyStats>().CanTeleport;
+            EnemyStats enemyStats = other.GetComponent<EnemyStats>();
 
-            if (canTeleport && other.GetComponent<EnemyStats>().LastPortalName == "")
+            canTeleport = enemyStats.canTeleport;
+            if (canTeleport && enemyStats.lastPortalName == "")
             {
-                EnemyStats enemyStats = other.GetComponent<EnemyStats>();
+                enemyStats.lastPortalName = this.name;
+                enemyStats.hasTeleported = true;
+                other.transform.position = teleportDestination;
+            }
+        }
 
-                enemyStats.LastPortalName = this.name;
-                enemyStats.HasTeleported = true;
+        if (other.CompareTag("Projectile"))
+        {
+            ProjectileStats projectileStats = other.GetComponent<ProjectileStats>();
+            canTeleport = projectileStats.canTeleport;
+
+            if (canTeleport && projectileStats.lastPortalName == "")
+            {
+                projectileStats.lastPortalName = this.name;
+                projectileStats.hasTeleported = true;
                 other.transform.position = teleportDestination;
             }
         }
@@ -57,18 +67,28 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            if (other.GetComponent<PlayerStats>().LastPortalName != this.name)
+            PlayerStats playerStats = other.GetComponent<PlayerStats>();
+            if (playerStats.lastPortalName != this.name)
             {
-                other.GetComponent<PlayerStats>().LastPortalName = "";
+                playerStats.lastPortalName = "";
             }
         }
-        if (other.tag == "Enemy")
+        if (other.CompareTag("Enemy"))
         {
-            if (other.GetComponent<EnemyStats>().LastPortalName != this.name)
+            EnemyStats enemyStats = other.GetComponent<EnemyStats>();
+            if (enemyStats.lastPortalName != this.name)
             {
-                other.GetComponent<EnemyStats>().LastPortalName = "";
+                enemyStats.lastPortalName = "";
+            }
+        }
+        if (other.CompareTag("Projectile"))
+        {
+            ProjectileStats projileStats = other.GetComponent<ProjectileStats>();
+            if (projileStats.lastPortalName != this.name)
+            {
+                projileStats.lastPortalName = "";
             }
         }
     }

@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 2106456018732197439}
   - component: {fileID: 9113983939874164496}
   - component: {fileID: 5249635503946226563}
+  - component: {fileID: 1839957447635907985}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,7 +126,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ed7e738eec3f34fba05f475edfe1c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
-  speed: 30
+--- !u!114 &1839957447635907985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106456018732197424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef250272b9e6a074c923e74863704871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  speed: 25
+  canTeleport: 1
+  lifeTime: 2
   shotByPlayer: 0
   damageMultiplier: 0
+  lastPortalName: 
+  hasTeleported: 0

@@ -20,7 +20,7 @@ public class EnemyJump : MonoBehaviour
         enemyMove = GetComponentInParent<EnemyMove>();
         enemyMove.choseNewPoint += IsEnemyBelowPoint;
         rigidBody = GetComponentInParent<Rigidbody>();
-        enemyStats.ShouldJump = true;
+        enemyStats.shouldJump = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,33 +48,33 @@ public class EnemyJump : MonoBehaviour
     public void IsEnemyBelowPoint() 
     {
         if (enemyMove.points.Count <= 0) return;
-        enemyIsBelowPoint = enemyMove.transform.position.y < enemyMove.points[enemyStats.PointIndex].transform.position.y;
+        enemyIsBelowPoint = enemyMove.transform.position.y < enemyMove.points[enemyStats.pointIndex].transform.position.y;
     }
 
     public IEnumerator CollisionWithObstacle(Collider other)
     {
         if (!other.CompareTag("Obstacle")) yield break;
-        if (enemyStats.JumpsLeft <= 0) yield break;
+        if (enemyStats.jumpsLeft <= 0) yield break;
 
-        enemyStats.Speed *= enemyStats.ObstacleSpeedMultiplier;
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, enemyStats.ObstacleJumpHeight, rigidBody.velocity.z);
-        enemyStats.JumpsLeft--;
+        enemyStats.speed *= enemyStats.obstacleSpeedMultiplier;
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, enemyStats.obstacleJumpHeight, rigidBody.velocity.z);
+        enemyStats.jumpsLeft--;
 
-        yield return new WaitForSeconds(enemyStats.ObstacleSpeedMultiplierTime);
+        yield return new WaitForSeconds(enemyStats.obstacleSpeedMultiplierTime);
 
-        enemyStats.Speed /= enemyStats.ObstacleSpeedMultiplier;
+        enemyStats.speed /= enemyStats.obstacleSpeedMultiplier;
     }
 
     public void CollisionWithLevel(Collider other)
     {
-        if (!enemyStats.ShouldJump) return;
+        if (!enemyStats.shouldJump) return;
         IsEnemyBelowPoint();
         if (!enemyIsBelowPoint) return;
         if (!other.CompareTag("Level")) return;
-        if (enemyStats.JumpsLeft <= 0) return;
+        if (enemyStats.jumpsLeft <= 0) return;
 
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, enemyStats.JumpHeight, rigidBody.velocity.z);
-        enemyStats.JumpsLeft--;
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, enemyStats.jumpHeight, rigidBody.velocity.z);
+        enemyStats.jumpsLeft--;
     }
     #endregion
 }

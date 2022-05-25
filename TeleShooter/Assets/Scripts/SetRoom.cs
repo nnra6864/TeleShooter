@@ -12,7 +12,7 @@ public class SetRoom : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<PlayerStats>().CurrentRoom = room;
+            other.GetComponent<PlayerStats>().currentRoom = room;
             playersInRoom++;
         }
         else if (other.tag == "Enemy") 

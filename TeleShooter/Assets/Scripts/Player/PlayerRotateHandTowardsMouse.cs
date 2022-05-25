@@ -19,14 +19,14 @@ public class PlayerRotateHandTowardsMouse : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        if (angle < -90 || angle > 90 && !playerStats.IsBackwards)
+        if (angle < -90 || angle > 90 && !playerStats.isBackwards)
         {
-            playerStats.IsBackwards = true;
+            playerStats.isBackwards = true;
             playerStats.gameObject.transform.rotation = Quaternion.Euler(-playerStats.gameObject.transform.rotation.x, playerStats.gameObject.transform.rotation.y, playerStats.transform.rotation.z);
         }
-        else if (angle > -90 || angle < 90 && playerStats.IsBackwards)
+        else if (angle > -90 || angle < 90 && playerStats.isBackwards)
         {
-            playerStats.IsBackwards = false;
+            playerStats.isBackwards = false;
             playerStats.gameObject.transform.rotation = Quaternion.Euler(-playerStats.gameObject.transform.rotation.x, playerStats.gameObject.transform.rotation.y, playerStats.transform.rotation.z);
         }
     }
