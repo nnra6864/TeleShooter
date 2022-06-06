@@ -12,19 +12,14 @@ public class Portal : MonoBehaviour
     private void Awake()
     {
         p1 = this.gameObject;
-        if (this.transform.parent.GetChild(0).name == p1.name)
-        {
-            p2 = this.transform.parent.GetChild(1).gameObject;
-        }
-        else 
-        {
-            p2 = this.transform.parent.GetChild(0).gameObject;
-        }
+        var childNum = this.transform.parent.GetChild(0).name == p1.name ? 1 : 0;
+        p2 = this.transform.parent.GetChild(childNum).gameObject;
         teleportDestination = p2.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        // this can be replaced with a switch statement
         if (other.CompareTag("Player"))
         {
             PlayerStats playerStats = other.GetComponent<PlayerStats>();
@@ -67,6 +62,7 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        // this too
         if (other.CompareTag("Player"))
         {
             PlayerStats playerStats = other.GetComponent<PlayerStats>();
