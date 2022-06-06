@@ -30,34 +30,25 @@ public class PlayerMelee : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" && !enemies.Contains(other.gameObject))
         {
-            if (!enemies.Contains(other.gameObject))
-            {
-                enemies.Add(other.gameObject);
-            }
+            enemies.Add(other.gameObject);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" && !enemies.Contains(other.gameObject))
         {
-            if (!enemies.Contains(other.gameObject))
-            {
-                enemies.Add(other.gameObject);
-            }
+            enemies.Add(other.gameObject);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" && enemies.Contains(other.gameObject))
         {
-            if (enemies.Contains(other.gameObject))
-            {
-                enemies.Remove(other.gameObject);
-            }
+            enemies.Remove(other.gameObject);
         }
     }
 
