@@ -6,6 +6,7 @@ public class EnemyJump : MonoBehaviour
     EnemyStats enemyStats;
     EnemyMove enemyMove;
     Rigidbody rigidBody;
+    Vector3 startingPosition;
 
     bool enemyIsBelowPoint = false;
 
@@ -20,6 +21,7 @@ public class EnemyJump : MonoBehaviour
         enemyMove = GetComponentInParent<EnemyMove>();
         enemyMove.choseNewPoint += IsEnemyBelowPoint;
         rigidBody = GetComponentInParent<Rigidbody>();
+        startingPosition = transform.localPosition;
         enemyStats.shouldJump = true;
     }
 
@@ -32,6 +34,11 @@ public class EnemyJump : MonoBehaviour
     {
         if(checkType == CheckType.Obstacle) StartCoroutine(CollisionWithObstacle(other));
         else if(checkType == CheckType.Level) CollisionWithLevel(other);
+    }
+
+    private void Update()
+    {
+        transform.localPosition = enemyStats.isMovingBackwards ? new Vector3(-startingPosition.x, startingPosition.y) : new Vector3(startingPosition.x, startingPosition.y);
     }
 
     private void FixedUpdate()

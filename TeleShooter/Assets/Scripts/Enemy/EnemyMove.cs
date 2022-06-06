@@ -12,6 +12,7 @@ public class EnemyMove : MonoBehaviour
     #region Variables
     EnemyStats enemyStats;
     Rigidbody rigidBody;
+    [ReadOnlyField]GameObject target;
 
     Vector3 defaultScale;
 
@@ -38,13 +39,11 @@ public class EnemyMove : MonoBehaviour
     {
         if (rigidBody.velocity.x >= 0)
         {
-            enemyStats.isBackwards = false;
-            this.transform.localScale = new Vector3(defaultScale.x, this.transform.localScale.y, this.transform.localScale.z);
+            enemyStats.isMovingBackwards = false;
         }
         else
         {
-            enemyStats.isBackwards = true;
-            this.transform.localScale = new Vector3(-defaultScale.x, this.transform.localScale.y, this.transform.localScale.z);
+            enemyStats.isMovingBackwards = true;
         }
 
         if (enemyStats.hasTeleported)
@@ -95,6 +94,7 @@ public class EnemyMove : MonoBehaviour
         if (enemyStats.shouldChoosePoint)
         {
             enemyStats.pointIndex = Random.Range(0, points.Count);
+            target = points[enemyStats.pointIndex];
             enemyStats.randomDistanceFromPoint = Random.Range(enemyStats.randomDistanceFromPointLowerLimit, enemyStats.randomDistanceFromPointUpperLimit);
         }
 
@@ -102,33 +102,49 @@ public class EnemyMove : MonoBehaviour
         enemyStats.canMove = true;
     }
 
+    public void ChooseTarget() 
+    {
+        if (enemyStats.shouldFollowPlayer)
+        {
+            target = enemyStats.followTargetPlayer;
+        }
+        else 
+        {
+            ChooseRandomPoint();
+        }
+    }
+
     public void MoveEnemy()
     {
-        if (points.Count > 0)
-        {
-            if (points[enemyStats.pointIndex].transform.position.x > transform.position.x)
-            {
-                rigidBody.velocity = new Vector3(enemyStats.speed, rigidBody.velocity.y, rigidBody.velocity.z);
-            }
-            else if (points[enemyStats.pointIndex].transform.position.x < transform.position.x)
-            {
-                rigidBody.velocity = new Vector3(-enemyStats.speed, rigidBody.velocity.y, rigidBody.velocity.z);
-            }
+        if (target == null || points[enemyStats.pointIndex] == null) return;
 
-            if (Vector3.Distance(new Vector3(transform.position.x, 0, 0), new Vector3(points[enemyStats.pointIndex].transform.position.x, 0, 0)) < enemyStats.randomDistanceFromPoint)
-            {
-                StartCoroutine(HasReachedPoint());
-            }
+        if (target.transform.position.x > transform.position.x)
+        {
+            rigidBody.velocity = new Vector3(enemyStats.speed, rigidBody.velocity.y, rigidBody.velocity.z);
+        }
+        else if (target.transform.position.x < transform.position.x)
+        {
+            rigidBody.velocity = new Vector3(-enemyStats.speed, rigidBody.velocity.y, rigidBody.velocity.z);
+        }
+
+        if (Vector3.Distance(new Vector3(transform.position.x, 0, 0), new Vector3(target.transform.position.x, 0, 0)) < enemyStats.randomDistanceFromPoint)
+        {
+            StartCoroutine(HasReachedPoint());
         }
     }
 
     public IEnumerator HasReachedPoint() 
     {
         float cooldown = Random.Range(enemyStats.timeBeforeChoosingPointLowerLimit, enemyStats.timeBeforeChoosingPointUpperLimit);
+        if (enemyStats.shouldFollowPlayer) cooldown = 0;
+
         enemyStats.shouldChoosePoint = true;
         enemyStats.canMove = false;
+        enemyStats.canFollowPlayer = false;
+
         yield return new WaitForSeconds(cooldown);
-        ChooseRandomPoint();
+
+        ChooseTarget();
         choseNewPoint.Invoke();
     }
     #endregion

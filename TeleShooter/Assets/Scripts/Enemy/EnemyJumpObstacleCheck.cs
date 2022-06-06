@@ -11,6 +11,11 @@ public class EnemyJumpObstacleCheck : MonoBehaviour
         enemyStats = transform.parent.GetComponentInParent<EnemyStats>();
     }
 
+    private void Update()
+    {
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Obstacle"))

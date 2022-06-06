@@ -59,6 +59,8 @@ public class EnemyTakeDamage : MonoBehaviour
     #region Custom Functions
     public IEnumerator TakeDamageFromLevel(float damageTaken, float cooldown)
     {
+        if (!enemyStats.canTakeDamage) yield break;
+
         enemyStats.isTakingDamageFromLevel = true;
 
         enemyStats.health -= damageTaken * enemyStats.resistanceMultiplier;
@@ -74,6 +76,8 @@ public class EnemyTakeDamage : MonoBehaviour
 
     public IEnumerator TakeDamageFromPlayer(float damageTaken, float cooldown, GameObject player) 
     {
+        if (!enemyStats.canTakeDamage) yield break;
+
         enemyStats.isTakingDamageFromPlayer = true;
 
         enemyStats.health -= damageTaken * enemyStats.resistanceMultiplier;

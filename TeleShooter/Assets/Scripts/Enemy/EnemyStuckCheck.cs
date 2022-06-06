@@ -40,7 +40,7 @@ public class EnemyStuckCheck : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (shouldCheck && !isChecking)
+        if (shouldCheck && !isChecking && !enemyStats.shouldFollowPlayer)
         {
             StartCoroutine(StuckTimer());
             shouldCheck = false;

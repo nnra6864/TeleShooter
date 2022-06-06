@@ -13,6 +13,7 @@ TagManager:
   - EnemySpawnPoint
   - RoomCheck
   - Projectile
+  - CustomCursor
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - EnemyWalkPoint
   - PlayerChecks
   - RoomCheck
-  - 
+  - CustomCursor
   - 
   - 
   - 

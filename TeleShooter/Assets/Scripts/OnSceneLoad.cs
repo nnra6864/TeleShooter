@@ -12,6 +12,7 @@ public class OnSceneLoad : MonoBehaviour
     int randomSpawnPointIndex;
     List<GameObject> spawnPoints = new List<GameObject>();
     GameObject mainVirtualCamera;
+    GameObject cursorCamera;
 
     void Start()
     {
@@ -21,7 +22,9 @@ public class OnSceneLoad : MonoBehaviour
         player.name = player.name.Replace("(Clone)", "");
 
         mainVirtualCamera = GameObject.Find("Main Virtual Camera");
+        cursorCamera = GameObject.Find("Cursor Camera");
         mainVirtualCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 5;
         mainVirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
+        cursorCamera.GetComponent<Camera>().orthographicSize = 5;
     }
 }

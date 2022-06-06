@@ -51,6 +51,9 @@ public class Gun : MonoBehaviour
     [Tooltip("If disabled, player won't be able to shoot.")]
     public bool canShoot;
 
+    [Tooltip("Time that has to pass before first Bullet is Fired.")]
+    public float timeBeforeFirstBulletIsFired;
+
     [Tooltip("Time that passes before you can shoot again.")]
     public float shootingCooldown;
 
@@ -129,6 +132,8 @@ public class Gun : MonoBehaviour
         isShooting = true;
 
         ChooseRandomProjectile();
+
+        yield return new WaitForSeconds(timeBeforeFirstBulletIsFired);
 
         if (isBurst)
         {

@@ -3,12 +3,15 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
     [Header("Editable Variables", order = 0)]
-    #region Visible Variables
+    #region Editable Variables
     [Header("Movement", order = 1)]
 
 
     [Tooltip("Enemy won't be able to Move if this is Disabled.")]
     public bool canMove;
+
+    [Tooltip("Enemy will start following a player if this is enabled.")]
+    public bool canFollowPlayer;
 
     [Tooltip("Enemy's Speed.")]
     public float speed;
@@ -33,6 +36,12 @@ public class EnemyStats : MonoBehaviour
 
     [Tooltip("If Enemy's position stays the same for StuckTime ammount of Time he will change his Destination.\n(Time in Seconds)")]
     public float stuckTime;
+
+    [Tooltip("Distance at which Enemy will start following Player")]
+    public float distanceFromPlayerToStartFollowing;
+
+    [Tooltip("Distance at which Enemy will stop following Player")]
+    public float distanceFromPlayerToStopFollowing;
 
 
     [Header("Jumping")]
@@ -134,6 +143,15 @@ public class EnemyStats : MonoBehaviour
 
     [Header("Enemy Move")]
 
+
+    [Tooltip("Determines if Enemy should Follow the Player.")]
+    [ReadOnlyField] public bool shouldFollowPlayer;
+
+    [Tooltip("Distance between Enemy and Player.")]
+    [ReadOnlyField] public float distanceFromPlayer;
+
+    [Tooltip("Player that Enemy is following.")]
+    [ReadOnlyField] public GameObject followTargetPlayer;
 
     [Tooltip("Index of the Room Enemy is located in.")]
     [ReadOnlyField] public int currentRoom;

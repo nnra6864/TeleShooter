@@ -365,6 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
+  canFollowPlayer: 1
   speed: 1.5
   obstacleSpeedMultiplier: 1.5
   obstacleSpeedMultiplierTime: 0.5
@@ -373,6 +374,8 @@ MonoBehaviour:
   timeBeforeChoosingPointLowerLimit: 0
   timeBeforeChoosingPointUpperLimit: 5
   stuckTime: 1
+  distanceFromPlayerToStartFollowing: 20
+  distanceFromPlayerToStopFollowing: 0
   canJump: 1
   jumpHeight: 6.5
   obstacleJumpHeight: 5
@@ -396,6 +399,9 @@ MonoBehaviour:
   shouldJump: 0
   isTakingDamageFromLevel: 0
   isTakingDamageFromPlayer: 0
+  shouldFollowPlayer: 0
+  distanceFromPlayer: 1
+  followTargetPlayer: {fileID: 0}
   currentRoom: 0
   hasTeleported: 0
   randomDistanceFromPoint: 1
@@ -426,6 +432,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c982beadc54a2a149ae783c35eed7a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 7856
 --- !u!114 &5479637557513661809
 MonoBehaviour:
   m_ObjectHideFlags: 0

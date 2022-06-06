@@ -5,36 +5,44 @@ using UnityEngine;
 public class EnemyRaycast : MonoBehaviour
 {
     EnemyStats enemyStats;
+    EnemyMove enemyMove;
     Vector3 rayDirection;
     float pointDistance;
-    LayerMask layerMask;
+    public LayerMask layerMask;
 
     public void Awake()
     {
         enemyStats = GetComponent<EnemyStats>();
-    }
-
-    void Update()
-    {
-
+        enemyMove = GetComponent<EnemyMove>();
     }
 
     private void FixedUpdate()
     {
-        rayDirection = enemyStats.isBackwards ? -transform.right : transform.right;
+        rayDirection = enemyStats.isMovingBackwards ? -transform.right : transform.right;
 
         RaycastHit hit;
         Ray ray = new Ray(transform.position, rayDirection);
 
         if (Physics.Raycast(transform.position, rayDirection, out hit, Mathf.Infinity, ~layerMask))
         {
-            if (hit.collider.gameObject.tag == "Player")
+            if (hit.collider.gameObject.tag == "Player" && enemyStats.canFollowPlayer)
             {
-                pointDistance = hit.distance;
+                if (enemyStats.distanceFromPlayerToStartFollowing >= hit.distance)
+                {
+                    enemyStats.followTargetPlayer = hit.collider.gameObject;
+                    enemyStats.shouldFollowPlayer = true;
+                    enemyMove.StopCoroutine(enemyMove.HasReachedPoint());
+                    enemyMove.ChooseTarget();
+                }
+                
+                if (enemyStats.distanceFromPlayerToStopFollowing >= hit.distance)
+                {
+                    enemyStats.shouldFollowPlayer = false;
+                }
             }
             else
             {
-
+                enemyStats.shouldFollowPlayer = false;
             }
             Debug.DrawLine(transform.position, hit.point, Color.red);
         }

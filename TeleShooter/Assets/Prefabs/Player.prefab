@@ -260,10 +260,11 @@ MonoBehaviour:
   chosenProjectile: {fileID: 0}
   isBurst: 0
   burstLength: 5
-  cooldownBetweenBurstProjectiles: 0.25
+  cooldownBetweenBurstProjectiles: 0.1
   randomBurstProjectiles: 0
   canHold: 1
   canShoot: 1
+  timeBeforeFirstBulletIsFired: 0
   shootingCooldown: 0.5
   shouldKnockBackPlayer: 1
   playerKnockbackMultiplier: 300
@@ -383,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c9cc631085bcb44ad0736e991f683a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canWallJump: 0
+  canWallJump: 1
 --- !u!1 &5074412815413543710
 GameObject:
   m_ObjectHideFlags: 0
