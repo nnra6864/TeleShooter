@@ -18,38 +18,23 @@ public class PlayerWallCheck : MonoBehaviour
 
     private void Update()
     {
-        if (playerStats.isMovingBackwards)
-        {
-            transform.localPosition = new Vector3(-originalPosition.x, transform.localPosition.y, transform.localPosition.z);
-        }
-        else
-        {
-            transform.localPosition = new Vector3(originalPosition.x, transform.localPosition.y, transform.localPosition.z);
-        }
+        var ogPosX = playerStats.isMovingBackwards ? -originalPosition.x : originalPosition.x;
+        transform.localPosition = new Vector3(ogPosX, transform.localPosition.y, transform.localPosition.z);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //Layer 7 is Enemy layer, have to use layer bcs enemy checks don't have enemy tag
-        if (other.tag != "Player" && other.gameObject.layer != 7 && other.tag != "Portal" && other.tag != "EnemySpawnPoint")
-        {
-            canWallJump = true;
-        }
+        canWallJump = (other.tag != "Player" && other.gameObject.layer != 7 && other.tag != "Portal" && other.tag != "EnemySpawnPoint");
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag != "Player" && other.gameObject.layer != 7 && other.tag != "Portal" && other.tag != "EnemySpawnPoint")
-        {
-            canWallJump = true;
-        }
+        canWallJump = (other.tag != "Player" && other.gameObject.layer != 7 && other.tag != "Portal" && other.tag != "EnemySpawnPoint");
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag != "Player" && other.gameObject.layer != 7 && other.tag != "Portal" && other.tag != "EnemySpawnPoint")
-        {
-            canWallJump = false;
-        }
+        canWallJump = (other.tag != "Player" && other.gameObject.layer != 7 && other.tag != "Portal" && other.tag != "EnemySpawnPoint");
     }
 }

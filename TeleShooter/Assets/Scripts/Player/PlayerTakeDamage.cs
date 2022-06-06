@@ -37,10 +37,7 @@ public class PlayerTakeDamage : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "Obstacle")
-        {
-            shouldTakeDamage = true;
-        }
+        shouldTakeDamage = collision.gameObject.tag == "Obstacle";
     }
 
     private void OnCollisionExit(Collision collision)

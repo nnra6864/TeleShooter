@@ -129,6 +129,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HorizontalInput()
     {
+        // ??? why does this have 2 same branches?
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
         {
             if (Input.GetKeyDown(KeyCode.A))
@@ -163,15 +164,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (playerWallCheck.canWallJump)
-            {
-                shouldWallJump = true;
-            }
-
-            if (playerStats.jumpsLeft > 0)
-            {
-                shouldJump = true;
-            }
+            shouldWallJump = playerWallCheck.canWallJump;
+            shouldJump = playerStats.jumpsLeft > 0;
         }
     }
 
@@ -185,14 +179,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallJump(bool isBackwards)
     {
-        if (!isBackwards)
-        {
-            playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(-playerStats.modifiedWallJumpForce, playerStats.modifiedWallJumpHeight, playerRigidbody.velocity.z), ref refVel, modifiedWallJumpSmoothTime);
-        }
-        else 
-        {
-            playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(playerStats.modifiedWallJumpForce, playerStats.modifiedWallJumpHeight, playerRigidbody.velocity.z), ref refVel, modifiedWallJumpSmoothTime);
-        }
+        // TODO: better variable names
+        var psNewJF = isBackwards ? -playerStats.modifiedWallJumpForce : playerStats.modifiedWallJumpForce
+        playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(psNewJF, playerStats.modifiedWallJumpHeight, playerRigidbody.velocity.z), ref refVel, modifiedWallJumpSmoothTime);
         shouldWallJump = false;
         playerStats.jumpsLeft++;
         playerStats.totalWallJumps++;
