@@ -33,9 +33,7 @@ public class EnemyTakeDamage : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        var isObstacle = collision.gameObject.CompareTag("Obstacle");
-        shouldTakeDamage = isObstacle;
-        enemyStats.isTakingDamageFromLevel = isObstacle;
+        enemyStats.isTakingDamageFromLevel = shouldTakeDamage = collision.gameObject.CompareTag("Obstacle");
     }
 
     private void FixedUpdate()

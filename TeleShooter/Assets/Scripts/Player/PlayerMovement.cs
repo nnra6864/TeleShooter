@@ -179,9 +179,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallJump(bool isBackwards)
     {
-        // TODO: better variable names
-        var psNewJF = isBackwards ? -playerStats.modifiedWallJumpForce : playerStats.modifiedWallJumpForce;
-        playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(psNewJF, playerStats.modifiedWallJumpHeight, playerRigidbody.velocity.z), ref refVel, modifiedWallJumpSmoothTime);
+        var isBackwardsModifiedWallJumpForce = isBackwards ? -playerStats.modifiedWallJumpForce : playerStats.modifiedWallJumpForce;
+        playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(isBackwardsModifiedWallJumpForce, playerStats.modifiedWallJumpHeight, playerRigidbody.velocity.z), ref refVel, modifiedWallJumpSmoothTime);
         shouldWallJump = false;
         playerStats.jumpsLeft++;
         playerStats.totalWallJumps++;

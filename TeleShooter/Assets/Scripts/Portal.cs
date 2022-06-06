@@ -12,8 +12,7 @@ public class Portal : MonoBehaviour
     private void Awake()
     {
         p1 = this.gameObject;
-        var childNum = this.transform.parent.GetChild(0).name == p1.name ? 1 : 0;
-        p2 = this.transform.parent.GetChild(childNum).gameObject;
+        p2 = this.transform.parent.GetChild(this.transform.parent.GetChild(0).name == p1.name ? 1 : 0).gameObject;
         teleportDestination = p2.transform.position;
     }
 
@@ -23,8 +22,8 @@ public class Portal : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerStats playerStats = other.GetComponent<PlayerStats>();
-
             canTeleport = playerStats.canTeleport;
+
             if (canTeleport && playerStats.lastPortalName == "")
             {
                 playerStats.lastPortalName = this.name;
@@ -36,8 +35,8 @@ public class Portal : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             EnemyStats enemyStats = other.GetComponent<EnemyStats>();
-
             canTeleport = enemyStats.canTeleport;
+
             if (canTeleport && enemyStats.lastPortalName == "")
             {
                 enemyStats.lastPortalName = this.name;
