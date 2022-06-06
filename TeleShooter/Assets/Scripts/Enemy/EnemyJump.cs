@@ -43,10 +43,10 @@ public class EnemyJump : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (rigidBody == null) return;
-        if (rigidBody.velocity.y < 0)
+        if (rigidBody?.velocity.y < 0)
         {
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y + (rigidBody.velocity.y / 20), rigidBody.velocity.z);
+            // unsure if this one needs a ?., try removing it
+            rigidBody?.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y + (rigidBody.velocity.y / 20), rigidBody.velocity.z);
         }
     }
     #endregion
@@ -60,8 +60,8 @@ public class EnemyJump : MonoBehaviour
 
     public IEnumerator CollisionWithObstacle(Collider other)
     {
-        if (!other.CompareTag("Obstacle")) yield break;
-        if (enemyStats.jumpsLeft <= 0) yield break;
+        if (!other.CompareTag("Obstacle") ||
+            enemyStats.jumpsLeft <= 0) yield break;
 
         enemyStats.speed *= enemyStats.obstacleSpeedMultiplier;
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, enemyStats.obstacleJumpHeight, rigidBody.velocity.z);
@@ -76,9 +76,9 @@ public class EnemyJump : MonoBehaviour
     {
         if (!enemyStats.shouldJump) return;
         IsEnemyBelowPoint();
-        if (!enemyIsBelowPoint) return;
-        if (!other.CompareTag("Level")) return;
-        if (enemyStats.jumpsLeft <= 0) return;
+        if (!enemyIsBelowPoint         ||
+            !other.CompareTag("Level") ||
+            enemyStats.jumpsLeft <= 0) return;
 
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, enemyStats.jumpHeight, rigidBody.velocity.z);
         enemyStats.jumpsLeft--;

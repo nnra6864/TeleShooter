@@ -35,11 +35,7 @@ public class EnemyRaycast : MonoBehaviour
                     enemyMove.ChooseTarget();
                 }
                 
-                if (enemyStats.distanceFromPlayerToStopFollowing >= hit.distance)
-                {
-                    enemyStats.shouldFollowPlayer = false;
-                }
-            }
+                enemyStats.shouldFollowPlayer = !(enemyStats.distanceFromPlayerToStopFollowing >= hit.distance);
             else
             {
                 enemyStats.shouldFollowPlayer = false;

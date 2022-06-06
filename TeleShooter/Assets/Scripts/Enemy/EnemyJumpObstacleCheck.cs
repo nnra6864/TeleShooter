@@ -18,25 +18,16 @@ public class EnemyJumpObstacleCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Obstacle"))
-        {
-            enemyStats.shouldJump = false;
-        }
+        enemyStats.shouldJump = !(other.CompareTag("Obstacle"))
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Obstacle"))
-        {
-            enemyStats.shouldJump = false;
-        }
+        enemyStats.shouldJump = !(other.CompareTag("Obstacle"))
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Obstacle"))
-        {
-            enemyStats.shouldJump = true;
-        }
+        enemyStats.shouldJump = other.CompareTag("Obstacle")
     }
 }

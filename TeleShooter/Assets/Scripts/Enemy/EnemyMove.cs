@@ -30,21 +30,14 @@ public class EnemyMove : MonoBehaviour
 
     void Start()
     {
-        if (enemyStats.currentRoom < 1) { enemyStats.currentRoom = 1; }
+        if (enemyStats.currentRoom < 1) enemyStats.currentRoom = 1;
         AddPoints();
         ChooseRandomPoint();
     }
 
     void Update()
     {
-        if (rigidBody.velocity.x >= 0)
-        {
-            enemyStats.isMovingBackwards = false;
-        }
-        else
-        {
-            enemyStats.isMovingBackwards = true;
-        }
+        enemyStats.isMovingBackwards = rigidBody.velocity.x >= 0;
 
         if (enemyStats.hasTeleported)
         {
@@ -116,16 +109,8 @@ public class EnemyMove : MonoBehaviour
 
     public void MoveEnemy()
     {
-        if (target == null || points[enemyStats.pointIndex] == null) return;
-
-        if (target.transform.position.x > transform.position.x)
-        {
-            rigidBody.velocity = new Vector3(enemyStats.speed, rigidBody.velocity.y, rigidBody.velocity.z);
-        }
-        else if (target.transform.position.x < transform.position.x)
-        {
-            rigidBody.velocity = new Vector3(-enemyStats.speed, rigidBody.velocity.y, rigidBody.velocity.z);
-        }
+        var esSpeed = target?.transform.position.x > transform.position.x ? enemyStats.speed : -enemyStats.speed;
+        rigidBody.velocity = new Vector3(esSpeed, rigidBody.velocity.y, rigidBody.velocity.z);
 
         if (Vector3.Distance(new Vector3(transform.position.x, 0, 0), new Vector3(target.transform.position.x, 0, 0)) < enemyStats.randomDistanceFromPoint)
         {

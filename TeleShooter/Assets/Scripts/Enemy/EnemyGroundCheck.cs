@@ -22,17 +22,11 @@ public class EnemyGroundCheck : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag != "Player" && other.tag != "Enemy")
-        {
-            enemyStats.isGrounded = true;
-        }
+        enegyStats.isGrounded = (other.tag != "Player" && other.tag != "Enemy");
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag != "Player" && other.tag != "Enemy")
-        {
-            enemyStats.isGrounded = false;
-        }
+        enemyState.isGrounded = !(other.tag != "Player" && other.tag != "Enemy");
     }
 }

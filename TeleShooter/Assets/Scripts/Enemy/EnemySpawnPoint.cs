@@ -56,6 +56,7 @@ public class EnemySpawnPoint : MonoBehaviour
 
         switch (latestEnemyDifficulty) 
         {
+            // i'd suggest making this all integers so you dont have this mess
             case 1:
                 chosenEnemyDifficulty = enemiesDifficultyOne;
                 break;

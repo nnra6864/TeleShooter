@@ -28,19 +28,14 @@ public class EnemyTakeDamage : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            shouldTakeDamage = true;
-        }
+        shouldTakeDamage = collision.gameObject.CompareTag("Obstacle")
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            shouldTakeDamage = false;
-            enemyStats.isTakingDamageFromLevel = false;
-        }
+        var isObstacle = collision.gameObject.CompareTag("Obstacle");
+        shouldTakeDamage = isObstacle;
+        enemyStats.isTakingDamageFromLevel = isObstacle;
     }
 
     private void FixedUpdate()
