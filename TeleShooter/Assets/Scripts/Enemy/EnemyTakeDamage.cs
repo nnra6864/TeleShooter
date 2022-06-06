@@ -28,7 +28,7 @@ public class EnemyTakeDamage : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        shouldTakeDamage = collision.gameObject.CompareTag("Obstacle")
+        shouldTakeDamage = collision.gameObject.CompareTag("Obstacle");
     }
 
     private void OnCollisionExit(Collision collision)

@@ -16,17 +16,17 @@ public class EnemyStuckCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        shouldCheck = other.CompareTag("Level")
+        shouldCheck = other.CompareTag("Level");
     }
 
     private void OnTriggerStay(Collider other)
     {
-        shouldCheck = other.CompareTag("Level")
+        shouldCheck = other.CompareTag("Level");
     }
 
     private void OnTriggerExit(Collider other)
     {
-        shouldCheck = !(other.CompareTag("Level"))
+        shouldCheck = !(other.CompareTag("Level"));
     }
 
     private void FixedUpdate()

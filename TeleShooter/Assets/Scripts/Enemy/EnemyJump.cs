@@ -43,10 +43,9 @@ public class EnemyJump : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (rigidBody?.velocity.y < 0)
+        if (rigidBody != null && rigidBody.velocity.y < 0)
         {
-            // unsure if this one needs a ?., try removing it
-            rigidBody?.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y + (rigidBody.velocity.y / 20), rigidBody.velocity.z);
+            rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y + (rigidBody.velocity.y / 20), rigidBody.velocity.z);
         }
     }
     #endregion
