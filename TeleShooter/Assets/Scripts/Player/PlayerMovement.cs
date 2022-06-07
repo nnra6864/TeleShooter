@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 refVel = Vector3.zero;
     #endregion
 
+    #region Functions
     private void Awake()
     {
         playerStats = GetComponent<PlayerStats>();
@@ -51,16 +52,18 @@ public class PlayerMovement : MonoBehaviour
             playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, playerRigidbody.velocity.y + (playerRigidbody.velocity.y / 15), playerRigidbody.velocity.z);
         }
 
-        if (shouldJump && playerStats.canJump)
+        if (shouldJump)
         {
             Jump();
         }
-        if (shouldWallJump && playerStats.canWallJump)
+        if (shouldWallJump)
         {
-            WallJump(playerStats.isMovingBackwards);
+            WallJump();
         }
     }
+    #endregion
 
+    #region CustomFunctions
     private void CheckForCrouchAndSprint() 
     {
         //Checks if Player is Crouching and Sprinting
@@ -163,8 +166,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            shouldWallJump = playerWallCheck.shouldWallJump && playerStats.canWallJump;
-            shouldJump = playerStats.jumpsLeft > 0;
+            shouldWallJump = playerWallCheck.canWallJump && playerStats.canWallJump;
+            shouldJump = playerStats.jumpsLeft > 0 && playerStats.canJump;
         }
     }
 
@@ -176,12 +179,13 @@ public class PlayerMovement : MonoBehaviour
         playerStats.totalJumps++;
     }
 
-    private void WallJump(bool isBackwards)
+    private void WallJump()
     {
-        var isBackwardsModifiedWallJumpForce = isBackwards ? -playerStats.modifiedWallJumpForce : playerStats.modifiedWallJumpForce;
+        var isBackwardsModifiedWallJumpForce = playerStats.isMovingBackwards ? playerStats.modifiedWallJumpForce : -playerStats.modifiedWallJumpForce;
         playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(isBackwardsModifiedWallJumpForce, playerStats.modifiedWallJumpHeight, playerRigidbody.velocity.z), ref refVel, modifiedWallJumpSmoothTime);
         shouldWallJump = false;
         playerStats.jumpsLeft++;
         playerStats.totalWallJumps++;
     }
+    #endregion
 }
