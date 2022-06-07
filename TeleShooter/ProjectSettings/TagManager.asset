@@ -26,7 +26,7 @@ TagManager:
   - World
   - Portal
   - EnemyWalkPoint
-  - PlayerChecks
+  - PlayerCheck
   - RoomCheck
   - CustomCursor
   - Weapon

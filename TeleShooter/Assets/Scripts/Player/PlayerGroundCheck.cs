@@ -7,6 +7,12 @@ public class PlayerGroundCheck : MonoBehaviour
     PlayerStats playerStats;
     PlayerMovement playerMovement;
 
+    [Tooltip("Must have the exact same name as tag you'd like to filter.")]
+    public List<string> ignoreTags;
+
+    [Tooltip("Must have the exact same name as layer you'd like to filter.")]
+    public List<string> ignoreLayers;
+
     int numberOfJumps;
 
     private void Awake()
@@ -19,9 +25,9 @@ public class PlayerGroundCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name != "Player" && other.tag != "Portal" && other.tag != "EnemySpawnPoint")
-        {
-            playerStats.jumpsLeft = numberOfJumps;
-        }
+        foreach (var tag in ignoreTags) { if (other.CompareTag(tag)) return; }
+        foreach (var layer in ignoreLayers) { if (other.gameObject.layer == LayerMask.NameToLayer(layer)) return; }
+
+        playerStats.jumpsLeft = numberOfJumps;
     }
 }

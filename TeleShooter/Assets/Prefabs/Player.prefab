@@ -327,6 +327,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648c33184ba3cd042850aa728db42b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreTags:
+  - Player
+  - SpawnPoint
+  - EnemySpawnPoint
+  - Projectile
+  ignoreLayers:
+  - Player
+  - EnemyWalkPoint
+  - PlayerCheck
+  - RoomCheck
+  - CustomCursor
+  - Weapon
 --- !u!1 &5074412814779789469
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c9cc631085bcb44ad0736e991f683a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shouldWallJump: 0
+  canWallJump: 0
   ignoreTags:
   - Player
   - Portal

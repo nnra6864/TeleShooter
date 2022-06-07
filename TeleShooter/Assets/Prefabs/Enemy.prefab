@@ -230,6 +230,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea97f32c842d8c4c850cad94826fa29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreTags:
+  - Player
+  - Enemy
+  - CustomCursor
+  - RoomCheck
+  ignoreLayers: []
 --- !u!1 &7839710204318129224
 GameObject:
   m_ObjectHideFlags: 0
