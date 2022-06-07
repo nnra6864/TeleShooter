@@ -129,7 +129,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void HorizontalInput()
     {
-        // ??? why does this have 2 same branches?
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
         {
             if (Input.GetKeyDown(KeyCode.A))
@@ -164,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            shouldWallJump = playerWallCheck.canWallJump;
+            shouldWallJump = playerWallCheck.shouldWallJump && playerStats.canWallJump;
             shouldJump = playerStats.jumpsLeft > 0;
         }
     }

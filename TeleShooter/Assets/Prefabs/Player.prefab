@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7323656163800627857}
   - component: {fileID: 1831161198807588670}
   - component: {fileID: 1088966859299458666}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7320240505377703777}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Projectile Spawn Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 3489247858624923640}
   - component: {fileID: 2768861884079192573}
   - component: {fileID: 1744077360533890958}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,7 +384,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c9cc631085bcb44ad0736e991f683a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canWallJump: 1
+  shouldWallJump: 0
+  ignoreTags:
+  - Player
+  - Portal
+  - EnemySpawnPoint
+  ignoreLayers:
+  - Enemy
 --- !u!1 &5074412815413543710
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,14 @@ public class PlayerWallCheck : MonoBehaviour
     PlayerStats playerStats;
 
     [Tooltip("If Disabled, Player won't be able to Wall Jump.")]
-    public bool canWallJump;
+    public bool shouldWallJump;
+
+    [Tooltip("Must have the exact same name as tag you'd like to filter.")]
+    public List<string> ignoreTags;
+
+    [Tooltip("Must have the exact same name as layer you'd like to filter.")]
+    public List<string> ignoreLayers;
+
     Vector3 originalPosition;
 
     private void Awake()
@@ -18,23 +25,27 @@ public class PlayerWallCheck : MonoBehaviour
 
     private void Update()
     {
-        var ogPosX = playerStats.isMovingBackwards ? -originalPosition.x : originalPosition.x;
-        transform.localPosition = new Vector3(ogPosX, transform.localPosition.y, transform.localPosition.z);
+        transform.localPosition = new Vector3(playerStats.isMovingBackwards ? -originalPosition.x : originalPosition.x, transform.localPosition.y, transform.localPosition.z);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Layer 7 is Enemy layer, have to use layer bcs enemy checks don't have enemy tag
-        canWallJump = (other.tag != "Player" && other.gameObject.layer != 7 && other.tag != "Portal" && other.tag != "EnemySpawnPoint");
+        foreach (var tag in ignoreTags) { if (other.CompareTag(tag)) return; }
+        foreach (var layer in ignoreLayers) { if (other.gameObject.layer == LayerMask.NameToLayer(layer)) return; }
+        shouldWallJump = true;
     }
 
     private void OnTriggerStay(Collider other)
     {
-        canWallJump = (other.tag != "Player" && other.gameObject.layer != 7 && other.tag != "Portal" && other.tag != "EnemySpawnPoint");
+        foreach (var tag in ignoreTags) { if (other.CompareTag(tag)) return; }
+        foreach (var layer in ignoreLayers) { if (other.gameObject.layer == LayerMask.NameToLayer(layer)) return; }
+        shouldWallJump = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        canWallJump = (other.tag != "Player" && other.gameObject.layer != 7 && other.tag != "Portal" && other.tag != "EnemySpawnPoint");
+        foreach (var tag in ignoreTags) { if (other.CompareTag(tag)) return; }
+        foreach (var layer in ignoreLayers) { if (other.gameObject.layer == LayerMask.NameToLayer(layer)) return; }
+        shouldWallJump = false;
     }
 }
