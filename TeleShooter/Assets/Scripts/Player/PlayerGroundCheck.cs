@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerGroundCheck : MonoBehaviour
 {
     PlayerStats playerStats;
-    PlayerMovement playerMovement;
 
     [Tooltip("Must have the exact same name as tag you'd like to filter.")]
     public List<string> ignoreTags;
@@ -19,8 +18,6 @@ public class PlayerGroundCheck : MonoBehaviour
     {
         playerStats = GetComponentInParent<PlayerStats>();
         numberOfJumps = playerStats.numberOfJumps;
-
-        playerMovement = GetComponentInParent<PlayerMovement>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,5 +26,11 @@ public class PlayerGroundCheck : MonoBehaviour
         foreach (var layer in ignoreLayers) { if (other.gameObject.layer == LayerMask.NameToLayer(layer)) return; }
 
         playerStats.jumpsLeft = numberOfJumps;
+        playerStats.isGrounded = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        playerStats.isGrounded = false;
     }
 }

@@ -419,6 +419,7 @@ GameObject:
   - component: {fileID: 620957620747071703}
   - component: {fileID: 5074412815413543684}
   - component: {fileID: 4648175637038953904}
+  - component: {fileID: 2765998462562053231}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -536,18 +537,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 1
   speed: 5
+  canTeleport: 1
   canCrouch: 1
   crouchSpeedMultiplier: 0.5
   canSprint: 1
   sprintSpeedMultiplier: 1.25
   movementSmoothTime: 0.1
-  canTeleport: 1
+  useCustomGravity: 1
+  gravityMultiplier: 1
+  useFallMultiplier: 1
+  fallMultiplier: 15
   canJump: 1
   jumpHeight: 10
+  numberOfJumps: 2
   crouchJumpMultiplier: 0.75
   sprintJumpMultiplier: 1.25
   jumpSmoothTime: 0.05
-  numberOfJumps: 2
   canWallJump: 1
   wallJumpForce: 10
   crouchWallJumpForceMultiplier: 0.5
@@ -564,15 +569,21 @@ MonoBehaviour:
   damage: 15
   damageMultiplier: 1
   dieAnimationLength: 0
+  isMoving: 0
   isBackwards: 0
   isMovingBackwards: 0
   isCrouching: 0
   isSprinting: 0
+  isGrounded: 0
   modifiedSpeed: 0
   jumpsLeft: 0
   modifiedJumpHeight: 0
   modifiedWallJumpForce: 0
   modifiedWallJumpHeight: 0
+  lastPortalName: 
+  isTakingDamageFromLevel: 0
+  isTakingDamageFromEntity: 0
+  currentRoom: 0
   totalKills: 0
   totalDamageGiven: 0
   totalDamageTaken: 0
@@ -582,11 +593,7 @@ MonoBehaviour:
   totalJumps: 0
   totalWallJumps: 0
   totalTeleportations: 0
-  lastPortalName: 
-  isTakingDamageFromLevel: 0
-  isTakingDamageFromEnemy: 0
   causeOfDeath: 
-  currentRoom: 0
 --- !u!114 &5074412815413543684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,6 +621,21 @@ MonoBehaviour:
   damageCooldown: 0
   damage: 0
   shouldTakeDamage: 0
+--- !u!114 &2765998462562053231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5074412815413543710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4530e005953858428f8a691206b667f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clockName: 
+  gravity: 9.81
+  modifiedGravity: 0
 --- !u!1 &6182148218666585761
 GameObject:
   m_ObjectHideFlags: 0

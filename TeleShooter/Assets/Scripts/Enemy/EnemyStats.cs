@@ -1,20 +1,14 @@
 using UnityEngine;
 
-public class EnemyStats : MonoBehaviour
+public class EnemyStats : Stats
 {
-    [Header("Editable Variables", order = 0)]
+    [Header("Enemy Class Editable Variables", order = 0)]
     #region Editable Variables
     [Header("Movement", order = 1)]
 
 
-    [Tooltip("Enemy won't be able to Move if this is Disabled.")]
-    public bool canMove;
-
     [Tooltip("Enemy will start following a player if this is enabled.")]
     public bool canFollowPlayer;
-
-    [Tooltip("Enemy's Speed.")]
-    public float speed;
 
     [Tooltip("If Enemy Collides with an Obstacle his Speed will be Multiplied with ObstacleSpeedMutliplier.\n(Speed * ObstacleSpeedMultiplier)")]
     public float obstacleSpeedMultiplier;
@@ -44,104 +38,31 @@ public class EnemyStats : MonoBehaviour
     public float distanceFromPlayerToStopFollowing;
 
 
-    [Header("Jumping")]
+    [Header("Jumping", order = 1)]
 
-
-    [Tooltip("Determines if Enemy can Jump.")]
-    public bool canJump;
-
-    [Tooltip("Height of a Jump.")]
-    public float jumpHeight;
 
     [Tooltip("Height of a Jump over Obstacle.")]
     public float obstacleJumpHeight;
-
-    [Tooltip("Number of Jumps an Enemy can do before having to land on something so he can Jump again.")]
-    public int numberOfJumps;
-
-
-    [Header("Combat")]
-
-
-    [Tooltip("Determines if an Enemy can perform a Melee Attack.")]
-    public bool canAttack;
-
-    [Tooltip("Determines if an Enemy can Shoot.")]
-    public bool canShoot;
-
-    [Tooltip("Determines if a Player can take Damage.")]
-    public bool canTakeDamage;
-
-    [Tooltip("Enemy's Health.")]
-    public float health;
-
-    [Tooltip("Multiplies all Damage Taken.\n(Damage * ResistanceMultiplier)")]
-    public float resistanceMultiplier;
-
-    [Tooltip("Ammount of Damage an Enemy will do when Attacking.\nThis doesn't affect Weapon's Damage.")]
-    public float damage;
-
-    [Tooltip("Multiplies Damage.\n(Damage * DamageMultiplier)")]
-    public float damageMultiplier;
-
-
-    [Header("General")]
-
-
-    [Tooltip("Length of Player Death Animation in Seconds.")]
-    public int dieAnimationLength;
-   
-    [Tooltip("If Disabled, Enemy won't be able to Teleport.")]
-    public bool canTeleport;
     #endregion
 
 
 
-    [Header("Read Only Variables", order = 0)]
+    [Header("Enemy Class Read Only Variables", order = 0)]
     #region Hidden Variables
-    [Header("Movement", order = 1)]
-
-
-    [Tooltip("Determines if Enemy is Moving.")]
-    [ReadOnlyField] public bool isMoving = false;
-
-    [Tooltip("Determines if Enemy is Looking Backwards.")]
-    [ReadOnlyField] public bool isBackwards;
-
-    [Tooltip("Determines if Enemy is Moving Backwards.")]
-    [ReadOnlyField] public bool isMovingBackwards;
-
-    [Tooltip("Speed with all Modifiers applied to it.")]
-    [ReadOnlyField] public float modifiedSpeed;
-
-    [Tooltip("Name of the Last Portal an Enemy interacted with.")]
-    [ReadOnlyField] public string lastPortalName = "";
+    //[Header("Movement", order = 1)]
 
     
-    [Header("Jump")]
+    [Header("Jumping", order = 1)]
 
-
-    [Tooltip("Determines if an Enemy is Grounded.")]
-    [ReadOnlyField] public bool isGrounded;
-
-    [Tooltip("Number of Jumps left for Enemy to use.")]
-    [ReadOnlyField] public int jumpsLeft;
 
     [Tooltip("Determines if Enemy should Jump.")]
     [ReadOnlyField] public bool shouldJump;
 
 
-    [Header("Combat")]
+    //[Header("Combat", order = 1)]
 
 
-    [Tooltip("Determines if Enemy is taking Damage from Level.")]
-    [ReadOnlyField] public bool isTakingDamageFromLevel;
-
-    [Tooltip("Determines if Enemy is taking Damage from Player.")]
-    [ReadOnlyField] public bool isTakingDamageFromPlayer;
-
-
-    [Header("Enemy Move")]
+    [Header("Enemy Move", order = 1)]
 
 
     [Tooltip("Determines if Enemy should Follow the Player.")]
@@ -152,9 +73,6 @@ public class EnemyStats : MonoBehaviour
 
     [Tooltip("Player that Enemy is following.")]
     [ReadOnlyField] public GameObject followTargetPlayer;
-
-    [Tooltip("Index of the Room Enemy is located in.")]
-    [ReadOnlyField] public int currentRoom;
 
     [Tooltip("Determines if an Enemy has Teleported.")]
     [ReadOnlyField] public bool hasTeleported = false;

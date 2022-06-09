@@ -1403,6 +1403,7 @@ GameObject:
   - component: {fileID: 138846561}
   - component: {fileID: 138846563}
   - component: {fileID: 138846562}
+  - component: {fileID: 138846564}
   m_Layer: 13
   m_Name: Particles
   m_TagString: Untagged
@@ -6197,6 +6198,23 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &138846564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138846560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6090da511f8374135a15dd8655adcd44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recordingInterval: 0.5
+  _mode: 1
+  _globalClockKey: Cursor
+  _rewindable: 0
+  _recordingDuration: 30
 --- !u!1001 &148777058
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17375,6 +17393,7 @@ GameObject:
   - component: {fileID: 1389643446}
   - component: {fileID: 1389643445}
   - component: {fileID: 1389643444}
+  - component: {fileID: 1389643449}
   m_Layer: 0
   m_Name: Timekeeper
   m_TagString: Untagged
@@ -17429,7 +17448,7 @@ MonoBehaviour:
   _paused: 0
   _parentKey: Root
   _parentBlend: 0
-  _key: Enemies
+  _key: Enemy
 --- !u!114 &1389643446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17478,6 +17497,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _debug: 0
   _maxParticleLoops: 10
+--- !u!114 &1389643449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389643442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0144e3ad8a88947298e2dca62625e6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localTimeScale: 1
+  _paused: 0
+  _parentKey: Root
+  _parentBlend: 0
+  _key: Cursor
 --- !u!1001 &1394140559
 PrefabInstance:
   m_ObjectHideFlags: 0

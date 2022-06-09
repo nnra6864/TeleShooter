@@ -71,7 +71,7 @@ public class EnemyTakeDamage : MonoBehaviour
     {
         if (!enemyStats.canTakeDamage) yield break;
 
-        enemyStats.isTakingDamageFromPlayer = true;
+        enemyStats.isTakingDamageFromEntity = true;
 
         enemyStats.health -= damageTaken * enemyStats.resistanceMultiplier;
         if (enemyStats.health <= 0)
@@ -82,7 +82,7 @@ public class EnemyTakeDamage : MonoBehaviour
 
         yield return new WaitForSeconds(damageCooldown);
 
-        enemyStats.isTakingDamageFromPlayer = false;
+        enemyStats.isTakingDamageFromEntity = false;
     }
 
     public void TakeDamageFromProjectile(float damageTaken)

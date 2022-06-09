@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     //Components
     PlayerStats playerStats;
     Rigidbody playerRigidbody;
-    PlayerGroundCheck playerGroundCheck;
     PlayerWallCheck playerWallCheck;
     Clock playerClock;
 
@@ -30,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     {
         playerStats = GetComponent<PlayerStats>();
         playerRigidbody = gameObject.GetComponent<Rigidbody>();
-        playerGroundCheck = GetComponentInChildren<PlayerGroundCheck>();
         playerWallCheck = GetComponentInChildren<PlayerWallCheck>();
     }
 
@@ -46,11 +44,6 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         HorizontalMovement();
-
-        if (playerRigidbody.velocity.y < 0)
-        {
-            playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, playerRigidbody.velocity.y + (playerRigidbody.velocity.y / 15), playerRigidbody.velocity.z);
-        }
 
         if (shouldJump)
         {

@@ -82,7 +82,7 @@ public class PlayerTakeDamage : MonoBehaviour
 
     public IEnumerator TakeDamageFromEnemy(float damageTaken, float cooldown, GameObject enemy)
     {
-        playerStats.isTakingDamageFromEnemy = true;
+        playerStats.isTakingDamageFromEntity = true;
 
         playerStats.health -= damageTaken * playerStats.resistanceMultiplier;
         playerStats.totalDamageTaken += damageTaken;
@@ -93,7 +93,7 @@ public class PlayerTakeDamage : MonoBehaviour
 
         yield return new WaitForSeconds(damageCooldown);
 
-        playerStats.isTakingDamageFromEnemy = false;
+        playerStats.isTakingDamageFromEntity = false;
     }
 
     public IEnumerator Die()
