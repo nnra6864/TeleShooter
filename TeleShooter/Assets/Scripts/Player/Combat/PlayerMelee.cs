@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Chronos;
 
 public class PlayerMelee : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerMelee : MonoBehaviour
     List<GameObject> enemies = new List<GameObject>();
     List<GameObject> deadEnemies = new List<GameObject>();
     EnemyTakeDamage enemyTakeDamage;
+    Clock clock;
 
     [Tooltip("Ammount of Damage the Weapon will do.")]
     public float damage = 1;
@@ -55,6 +57,7 @@ public class PlayerMelee : MonoBehaviour
     private void Awake()
     {
         playerStats = GetComponentInParent<PlayerStats>();
+        clock = Timekeeper.instance.Clock("Player");
     }
 
     void Update()
@@ -102,7 +105,7 @@ public class PlayerMelee : MonoBehaviour
         EnemiesTakeDamage();
 
         float cooldown = Random.Range(cooldownLowerLimit, cooldownUpperLimit);
-        yield return new WaitForSeconds(cooldown);
+        yield return new WaitForSeconds(cooldown / clock.timeScale);
 
         isAttacking = false;
     }

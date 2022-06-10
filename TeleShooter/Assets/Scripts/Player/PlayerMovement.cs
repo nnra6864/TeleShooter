@@ -167,8 +167,8 @@ public class PlayerMovement : MonoBehaviour
     private void Jump() 
     {
         playerRigidbody.velocity = Vector3.SmoothDamp(playerRigidbody.velocity, new Vector3(playerRigidbody.velocity.x, playerStats.modifiedJumpHeight, playerRigidbody.velocity.z), ref refVel, modifiedJumpSmoothTime);
-        playerStats.jumpsLeft--;
         shouldJump = false;
+        playerStats.jumpsLeft--;
         playerStats.totalJumps++;
     }
 

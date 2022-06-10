@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Chronos;
 
 public class Gun : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Gun : MonoBehaviour
     PlayerStats playerStats;
     Rigidbody playerRigidbody;
     Transform projectileSpawnPosition; //When creating a Gun, create a new Empty Game Object as Gun's Child and place it at the tip of your gun and name it Projectile Spawn Position
+    Clock clock;
 
 
     [Header("Projectile")]
@@ -75,6 +77,7 @@ public class Gun : MonoBehaviour
         playerStats = GetComponentInParent<PlayerStats>();
         playerRigidbody = GetComponentInParent<Rigidbody>();
         projectileSpawnPosition = transform.Find("Projectile Spawn Position").transform;
+        clock = Timekeeper.instance.Clock("World");
     }
 
     void Update()
@@ -133,7 +136,7 @@ public class Gun : MonoBehaviour
 
         ChooseRandomProjectile();
 
-        yield return new WaitForSeconds(timeBeforeFirstBulletIsFired);
+        yield return new WaitForSeconds(timeBeforeFirstBulletIsFired / clock.timeScale);
 
         if (isBurst)
         {
@@ -147,7 +150,7 @@ public class Gun : MonoBehaviour
                 InstantiateProjectile();
                 KnochBackPlayer();
 
-                yield return new WaitForSeconds(cooldownBetweenBurstProjectiles);
+                yield return new WaitForSeconds(cooldownBetweenBurstProjectiles / clock.timeScale);
             }
         }
         else
@@ -156,7 +159,7 @@ public class Gun : MonoBehaviour
             KnochBackPlayer();
         }
 
-        yield return new WaitForSeconds(shootingCooldown);
+        yield return new WaitForSeconds(shootingCooldown / clock.timeScale);
         isShooting = false;
     }
 

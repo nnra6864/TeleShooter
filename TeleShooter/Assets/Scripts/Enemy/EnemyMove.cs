@@ -37,7 +37,7 @@ public class EnemyMove : MonoBehaviour
 
     void Update()
     {
-        enemyStats.isMovingBackwards = rigidBody.velocity.x >= 0;
+        enemyStats.isMovingBackwards = rigidBody.velocity.x < 0;
 
         if (enemyStats.hasTeleported)
         {

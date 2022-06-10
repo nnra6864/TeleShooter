@@ -54,6 +54,6 @@ public class CustomGravity : MonoBehaviour
         rigidBody.AddForce(new Vector3(0, -modifiedGravity, 0));
         
         if (!stats.useFallMultiplier || rigidBody.velocity.y >= 0) return;
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y + (rigidBody.velocity.y / stats.fallMultiplier), rigidBody.velocity.z);
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y + (rigidBody.velocity.y / stats.fallMultiplier * clock.timeScale), rigidBody.velocity.z);
     }
 }
