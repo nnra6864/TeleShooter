@@ -51,6 +51,7 @@ public class CustomGravity : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (rigidBody == null) return;
         rigidBody.AddForce(new Vector3(0, -modifiedGravity, 0));
         
         if (!stats.useFallMultiplier || rigidBody.velocity.y >= 0) return;
